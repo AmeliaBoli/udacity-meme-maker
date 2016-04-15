@@ -28,34 +28,19 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FA4-Zz-0IQ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FA4-Zz-0IQ">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="b6f-Ij-QR0"/>
-                                    <constraint firstAttribute="width" constant="240" id="t0E-5r-n0s"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="b6f-Ij-QR0"/>
-                                        <exclude reference="t0E-5r-n0s"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="b6f-Ij-QR0"/>
-                                        <include reference="t0E-5r-n0s"/>
-                                    </mask>
-                                </variation>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Wrs-bM-mid" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="1uq-Kt-8gV"/>
-                            <constraint firstItem="Wrs-bM-mid" firstAttribute="top" secondItem="FA4-Zz-0IQ" secondAttribute="bottom" constant="136" id="Cjo-cc-O33"/>
+                            <constraint firstItem="Wrs-bM-mid" firstAttribute="top" secondItem="FA4-Zz-0IQ" secondAttribute="bottom" id="J80-mD-ceV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Wrs-bM-mid" secondAttribute="trailing" constant="-20" id="JCN-ys-YDA"/>
-                            <constraint firstItem="FA4-Zz-0IQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Lbj-n7-HAM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FA4-Zz-0IQ" secondAttribute="trailing" id="MVM-RO-j6c"/>
+                            <constraint firstItem="FA4-Zz-0IQ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="fNZ-ww-Cyx"/>
+                            <constraint firstItem="FA4-Zz-0IQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="jvN-sZ-lG6"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Wrs-bM-mid" secondAttribute="bottom" id="l5z-jn-qab"/>
-                            <constraint firstItem="FA4-Zz-0IQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nib-7h-ACt"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -63,10 +48,11 @@
                                 <exclude reference="FA4-Zz-0IQ"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Lbj-n7-HAM"/>
-                                <exclude reference="nib-7h-ACt"/>
+                                <exclude reference="MVM-RO-j6c"/>
+                                <exclude reference="fNZ-ww-Cyx"/>
+                                <exclude reference="jvN-sZ-lG6"/>
                                 <exclude reference="1uq-Kt-8gV"/>
-                                <exclude reference="Cjo-cc-O33"/>
+                                <exclude reference="J80-mD-ceV"/>
                                 <exclude reference="JCN-ys-YDA"/>
                                 <exclude reference="l5z-jn-qab"/>
                             </mask>
@@ -77,10 +63,11 @@
                                 <include reference="FA4-Zz-0IQ"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Lbj-n7-HAM"/>
-                                <include reference="nib-7h-ACt"/>
+                                <include reference="MVM-RO-j6c"/>
+                                <include reference="fNZ-ww-Cyx"/>
+                                <include reference="jvN-sZ-lG6"/>
                                 <include reference="1uq-Kt-8gV"/>
-                                <include reference="Cjo-cc-O33"/>
+                                <include reference="J80-mD-ceV"/>
                                 <include reference="JCN-ys-YDA"/>
                                 <include reference="l5z-jn-qab"/>
                             </mask>
