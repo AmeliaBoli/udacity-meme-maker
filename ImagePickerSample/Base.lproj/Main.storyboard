@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ImagePickerSample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,8 +17,78 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wrs-bM-mid">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem title="Pick" id="yZK-nX-5dZ">
+                                        <connections>
+                                            <action selector="pickImage:" destination="BYZ-38-t0r" id="GMw-Qd-F73"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FA4-Zz-0IQ">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="b6f-Ij-QR0"/>
+                                    <constraint firstAttribute="width" constant="240" id="t0E-5r-n0s"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="b6f-Ij-QR0"/>
+                                        <exclude reference="t0E-5r-n0s"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="b6f-Ij-QR0"/>
+                                        <include reference="t0E-5r-n0s"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Wrs-bM-mid" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="1uq-Kt-8gV"/>
+                            <constraint firstItem="Wrs-bM-mid" firstAttribute="top" secondItem="FA4-Zz-0IQ" secondAttribute="bottom" constant="136" id="Cjo-cc-O33"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Wrs-bM-mid" secondAttribute="trailing" constant="-20" id="JCN-ys-YDA"/>
+                            <constraint firstItem="FA4-Zz-0IQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Lbj-n7-HAM"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Wrs-bM-mid" secondAttribute="bottom" id="l5z-jn-qab"/>
+                            <constraint firstItem="FA4-Zz-0IQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nib-7h-ACt"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Wrs-bM-mid"/>
+                                <exclude reference="FA4-Zz-0IQ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="Lbj-n7-HAM"/>
+                                <exclude reference="nib-7h-ACt"/>
+                                <exclude reference="1uq-Kt-8gV"/>
+                                <exclude reference="Cjo-cc-O33"/>
+                                <exclude reference="JCN-ys-YDA"/>
+                                <exclude reference="l5z-jn-qab"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Wrs-bM-mid"/>
+                                <include reference="FA4-Zz-0IQ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="Lbj-n7-HAM"/>
+                                <include reference="nib-7h-ACt"/>
+                                <include reference="1uq-Kt-8gV"/>
+                                <include reference="Cjo-cc-O33"/>
+                                <include reference="JCN-ys-YDA"/>
+                                <include reference="l5z-jn-qab"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="pickedImage" destination="FA4-Zz-0IQ" id="lBN-a4-Nnl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

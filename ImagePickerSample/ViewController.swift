@@ -10,16 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var pickedImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func pickImage(sender: UIBarButtonItem) {
+        let pickerController = UIImagePickerController()
+        self.presentViewController(pickerController, animated: true, completion: nil)
     }
-
-
 }
 
