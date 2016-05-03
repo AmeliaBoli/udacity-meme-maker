@@ -18,7 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var topNavigationBar: UINavigationBar!
     @IBOutlet weak var bottomToolbar: UIToolbar!
     
-    let memeTextAttributes = [
+    var memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
         NSForegroundColorAttributeName : UIColor.whiteColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
@@ -38,6 +38,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         UIApplication.sharedApplication().statusBarHidden = true
         shareButton.enabled = false
+        
+        for family in UIFont.familyNames() {
+            print("\(family)")
+            
+            for name in UIFont.fontNamesForFamilyName(family) {
+                print("   \(name)")
+            }
+        }
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -67,6 +75,32 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    @IBAction func pickFont(sender: UIBarButtonItem!) {
+        let fontView = UIAlertController(title: "Fonts", message: nil, preferredStyle: .ActionSheet)
+        let setTimes = UIAlertAction(title: "Times New Roman", style: .Default) {action in self.changeFont(action)}
+        let setHelvetica = UIAlertAction(title: "Helvetica Neue", style: .Default) {action in self.changeFont(action)}
+        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        fontView.addAction(setHelvetica)
+        fontView.addAction(setTimes)
+        fontView.addAction(cancel)
+        
+        presentViewController(fontView, animated: true, completion: nil)
+    }
+    
+    func changeFont(action: UIAlertAction) {
+        let newFont: UIFont
+        switch action.title! {
+        case "Times New Roman": newFont = UIFont(name: "TimesNewRomanPSMT", size: 40)!
+        case "Helvetica": newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
+        default: newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
+        }
+        memeTextAttributes[NSFontAttributeName] = newFont
+        topTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.defaultTextAttributes = memeTextAttributes
+        topTextField.textAlignment = .Center
+        bottomTextField.textAlignment = .Center
     }
     
     // Image Picker Configuration

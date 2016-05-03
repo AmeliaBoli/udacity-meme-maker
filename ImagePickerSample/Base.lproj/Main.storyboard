@@ -40,7 +40,7 @@
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vnZ-8W-oHt">
                                 <rect key="frame" x="20" y="84" width="560" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8ZP-JR-zaq">
@@ -51,6 +51,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wrs-bM-mid">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="rNF-8z-m7S"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="w4M-dm-QoT"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Aja-7Y-cxy"/>
                                     <barButtonItem systemItem="camera" id="TQN-AO-V34">
@@ -66,6 +67,11 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="aYH-6k-dYc"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="22l-Lt-SgO"/>
+                                    <barButtonItem title="Font" id="Bku-de-fXx">
+                                        <connections>
+                                            <action selector="pickFont:" destination="BYZ-38-t0r" id="kF2-jg-ddZ"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
