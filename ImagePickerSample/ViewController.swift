@@ -38,14 +38,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         UIApplication.sharedApplication().statusBarHidden = true
         shareButton.enabled = false
-        
-        for family in UIFont.familyNames() {
-            print("\(family)")
-            
-            for name in UIFont.fontNamesForFamilyName(family) {
-                print("   \(name)")
-            }
-        }
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -79,21 +71,37 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func pickFont(sender: UIBarButtonItem!) {
         let fontView = UIAlertController(title: "Fonts", message: nil, preferredStyle: .ActionSheet)
-        let setTimes = UIAlertAction(title: "Times New Roman", style: .Default) {action in self.changeFont(action)}
-        let setHelvetica = UIAlertAction(title: "Helvetica Neue", style: .Default) {action in self.changeFont(action)}
+        fontView.message = "Select a New Font"
+        let setAmericanTypewriter = UIAlertAction(title: "American Typewriter", style: .Default) {action in
+            let title = action.title!
+            self.changeFont(title)}
+        let setBradleyHand = UIAlertAction(title: "Bradley Hand", style: .Default) {action in
+            let title = action.title!
+            self.changeFont(title)}
+        let setCopperplate = UIAlertAction(title: "Copperplate", style: .Default) {action in
+            let title = action.title!
+            self.changeFont(title)}
+        let setHelvetica = UIAlertAction(title: "Helvetica Neue", style: .Default) {action in
+            let title = action.title!
+            self.changeFont(title)}
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        fontView.addAction(setAmericanTypewriter)
+        fontView.addAction(setBradleyHand)
+        fontView.addAction(setCopperplate)
         fontView.addAction(setHelvetica)
-        fontView.addAction(setTimes)
         fontView.addAction(cancel)
         
         presentViewController(fontView, animated: true, completion: nil)
     }
     
-    func changeFont(action: UIAlertAction) {
+    func changeFont(title: String) {
         let newFont: UIFont
-        switch action.title! {
-        case "Times New Roman": newFont = UIFont(name: "TimesNewRomanPSMT", size: 40)!
-        case "Helvetica": newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
+        switch title {
+        case "American Typewriter": newFont = UIFont(name: "AmericanTypewriter-CondensedBold", size: 40)!
+        case "Bradley Hand": newFont = UIFont(name: "BradleyHandITCTT-Bold", size: 50)!
+        case "Copperplate": newFont = UIFont(name: "Copperplate-Bold", size: 40)!
+        case "Helvetica Neue": newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
+            
         default: newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         }
         memeTextAttributes[NSFontAttributeName] = newFont
@@ -208,6 +216,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         bottomTextField.text = "BOTTOM"
         pickedImage.image = nil
         shareButton.enabled = false
+        changeFont("Helvetica Neue")
     }
 }
 
