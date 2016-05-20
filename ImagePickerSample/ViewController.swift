@@ -241,7 +241,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
         let sourceViewController = segue.sourceViewController as! ImageEdittingViewController
-        self.pickedImage = sourceViewController.imageToEdit
+        self.pickedImage.image = sourceViewController.imageToEdit.image
     }
 }
 
