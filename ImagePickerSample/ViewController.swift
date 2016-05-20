@@ -10,13 +10,14 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
-    @IBOutlet weak var pickedImage: UIImageView!
+    @IBOutlet var pickedImage: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var topNavigationBar: UINavigationBar!
     @IBOutlet weak var bottomToolbar: UIToolbar!
+    @IBOutlet weak var cropButton: UIBarButtonItem!
     
     var memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
@@ -38,6 +39,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         UIApplication.sharedApplication().statusBarHidden = true
         shareButton.enabled = false
+        cropButton.enabled = false
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -71,7 +73,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func pickFont(sender: UIBarButtonItem!) {
         let fontView = UIAlertController(title: "Fonts", message: nil, preferredStyle: .ActionSheet)
+        
+        //While sharing my progress with someone, they recommended that I add a message in order to make the alert clearer.
         fontView.message = "Select a New Font"
+        
         let setAmericanTypewriter = UIAlertAction(title: "American Typewriter", style: .Default) {action in
             let title = action.title!
             self.changeFont(title)}
@@ -131,6 +136,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             pickedImage.image = image
             shareButton.enabled = true
+            cropButton.enabled = true
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -138,6 +144,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    // Image Management
+//    @IBAction func cropImage(sender: UIBarButtonItem) {
+//    }
+    
     
     // Keyboard Confirguration
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
@@ -216,7 +227,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         bottomTextField.text = "BOTTOM"
         pickedImage.image = nil
         shareButton.enabled = false
+        cropButton.enabled = false
         changeFont("Helvetica Neue")
+    }
+    
+    // Transition Management
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "editImage" {
+            let controller = segue.destinationViewController as! ImageEdittingViewController
+            controller.image = self.pickedImage.image!
+        }
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
+        let sourceViewController = segue.sourceViewController as! ImageEdittingViewController
+        self.pickedImage = sourceViewController.imageToEdit
     }
 }
 

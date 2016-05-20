@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9404F82D1CEE8E7E000D6020 /* ImageEdittingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */; };
 		94FC1AAA1CC0C54300464DC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */; };
 		94FC1AAC1CC0C54300464DC7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AAB1CC0C54300464DC7 /* ViewController.swift */; };
 		94FC1AAF1CC0C54300464DC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FC1AAD1CC0C54300464DC7 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdittingViewController.swift; sourceTree = "<group>"; };
 		94FC1AA61CC0C54300464DC7 /* ImagePickerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagePickerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94FC1AAB1CC0C54300464DC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			children = (
 				94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */,
 				94FC1AAB1CC0C54300464DC7 /* ViewController.swift */,
+				9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */,
 				94FC1AAD1CC0C54300464DC7 /* Main.storyboard */,
 				94FC1AB01CC0C54300464DC7 /* Assets.xcassets */,
 				94FC1AB21CC0C54300464DC7 /* LaunchScreen.storyboard */,
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9404F82D1CEE8E7E000D6020 /* ImageEdittingViewController.swift in Sources */,
 				94FC1AAC1CC0C54300464DC7 /* ViewController.swift in Sources */,
 				94FC1AAA1CC0C54300464DC7 /* AppDelegate.swift in Sources */,
 			);
@@ -482,6 +486,7 @@
 				94FC1AD01CC0C54400464DC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94FC1AD11CC0C54400464DC7 /* Build configuration list for PBXNativeTarget "ImagePickerSampleTests" */ = {
 			isa = XCConfigurationList;
@@ -490,6 +495,7 @@
 				94FC1AD31CC0C54400464DC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94FC1AD41CC0C54400464DC7 /* Build configuration list for PBXNativeTarget "ImagePickerSampleUITests" */ = {
 			isa = XCConfigurationList;
@@ -498,6 +504,7 @@
 				94FC1AD61CC0C54400464DC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
