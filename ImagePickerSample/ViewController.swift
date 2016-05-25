@@ -40,6 +40,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIApplication.sharedApplication().statusBarHidden = true
         shareButton.enabled = false
         cropButton.enabled = false
+        
+        
     }
     
     override func prefersStatusBarHidden() -> Bool {

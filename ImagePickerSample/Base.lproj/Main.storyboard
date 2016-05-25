@@ -20,6 +20,10 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rTT-zZ-3JM">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="O9g-Bb-tnB"/>
+                                    <constraint firstAttribute="height" constant="44" id="kC2-ch-HjN"/>
+                                </constraints>
                                 <items>
                                     <navigationItem id="KNx-8y-8jC">
                                         <barButtonItem key="leftBarButtonItem" systemItem="action" id="U19-PZ-dMH">
@@ -50,6 +54,9 @@
                             </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wrs-bM-mid">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="uzA-RW-6Nb"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem title="Crop" id="isW-Zb-zGJ">
                                         <connections>
@@ -136,6 +143,9 @@
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHU-FR-psL">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="6D7-0y-Bt3"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem title="Cancel" id="LDX-gY-OHR">
                                         <connections>
@@ -154,8 +164,9 @@
                                 <rect key="frame" x="10" y="30" width="580" height="516"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z8B-gi-hDQ">
-                                <rect key="frame" x="10" y="30" width="580" height="516"/>
+                                <rect key="frame" x="15" y="35" width="570" height="506"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -164,19 +175,19 @@
                             <constraint firstItem="Z8B-gi-hDQ" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leadingMargin" id="1Za-21-ias"/>
                             <constraint firstAttribute="trailing" secondItem="qHU-FR-psL" secondAttribute="trailing" id="9kU-bd-Nej"/>
                             <constraint firstItem="Z8B-gi-hDQ" firstAttribute="top" secondItem="agH-Fh-T17" secondAttribute="top" id="CId-dr-Ago"/>
-                            <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="Z8B-gi-hDQ" secondAttribute="bottom" constant="10" id="Mmv-dD-NRU"/>
+                            <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="Z8B-gi-hDQ" secondAttribute="bottom" constant="15" id="Mmv-dD-NRU"/>
                             <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="agH-Fh-T17" secondAttribute="bottom" constant="10" id="TtC-Xk-llT"/>
                             <constraint firstItem="agH-Fh-T17" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" constant="10" id="Ukv-Fo-TT1"/>
                             <constraint firstItem="agH-Fh-T17" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" constant="10" id="Wrj-hr-k5j"/>
                             <constraint firstItem="qHU-FR-psL" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" id="Ynf-g9-h2A"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" constant="10" id="cv8-d4-8JR"/>
+                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" constant="15" id="cv8-d4-8JR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Z8B-gi-hDQ" secondAttribute="trailing" id="dMS-Ke-0mm"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" constant="10" id="e7v-Jb-AFI"/>
+                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" constant="15" id="e7v-Jb-AFI"/>
                             <constraint firstItem="Z8B-gi-hDQ" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" id="iVp-in-oBL"/>
                             <constraint firstItem="Z8B-gi-hDQ" firstAttribute="leading" secondItem="agH-Fh-T17" secondAttribute="leading" id="l5k-8a-y0o"/>
                             <constraint firstItem="Z8B-gi-hDQ" firstAttribute="trailing" secondItem="agH-Fh-T17" secondAttribute="trailing" id="m5d-GL-6iX"/>
                             <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="Z8B-gi-hDQ" secondAttribute="bottom" id="omW-9z-JDU"/>
-                            <constraint firstAttribute="trailing" secondItem="Z8B-gi-hDQ" secondAttribute="trailing" constant="10" id="pxh-bU-B8s"/>
+                            <constraint firstAttribute="trailing" secondItem="Z8B-gi-hDQ" secondAttribute="trailing" constant="15" id="pxh-bU-B8s"/>
                             <constraint firstAttribute="trailing" secondItem="agH-Fh-T17" secondAttribute="trailing" constant="10" id="rbE-Ae-V1C"/>
                             <constraint firstItem="Z8B-gi-hDQ" firstAttribute="bottom" secondItem="agH-Fh-T17" secondAttribute="bottom" id="vLz-c1-Tr2"/>
                         </constraints>
@@ -192,13 +203,22 @@
                                 <exclude reference="omW-9z-JDU"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Xp4-ZG-iG5" appends="YES" id="yV4-0b-rJc"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="imageCropper" destination="Z8B-gi-hDQ" id="dLN-vB-HU6"/>
                         <outlet property="imageToEdit" destination="agH-Fh-T17" id="SiX-D2-iKg"/>
+                        <outlet property="panGesture" destination="Xp4-ZG-iG5" id="Ada-mf-5q5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q88-kQ-FzA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Xp4-ZG-iG5">
+                    <connections>
+                        <action selector="handlePan:" destination="aZp-et-zwN" id="72S-Jt-B0n"/>
+                    </connections>
+                </panGestureRecognizer>
                 <exit id="w78-xV-PYR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="892" y="280"/>
