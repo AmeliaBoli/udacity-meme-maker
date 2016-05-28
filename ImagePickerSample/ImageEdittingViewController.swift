@@ -8,13 +8,15 @@
 
 import UIKit
 import AVFoundation
+//import CoreImage
 
 enum Edge {
     case Left, Right, Top, Bottom
 }
 
 class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate {
-
+    
+    @IBOutlet weak var maskedImage: UIImageView!
     @IBOutlet weak var imageToEdit: UIImageView!
     @IBOutlet weak var imageCropper: UIView!
     @IBOutlet var panGesture: UIPanGestureRecognizer!
@@ -28,24 +30,54 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         return imageCropper.frame
     }
     
+    var resizedImageFrame = CGRect()
+    
     let outOfBoundsBuffer = CGFloat(5)
     let minimumSideLength = CGFloat(40)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         imageToEdit.image = image
-        imageCropper.layer.borderWidth = 1.0
-        imageCropper.layer.borderColor = UIColor.whiteColor().CGColor
+        maskedImage.image = image
+       
         panGesture.delegate = self
+        
+//        let borderLayer = CALayer()
+//        borderLayer.borderWidth = 1.0
+//        borderLayer.borderColor = UIColor.whiteColor().CGColor
+//        borderLayer.masksToBounds = true
+//        imageToEdit.layer.addSublayer(borderLayer)
+
+        imageToEdit.maskView = imageCropper
+        
+//        CAShapeLayer*   frameLayer = [CAShapeLayer layer];
+//        frameLayer.frame = bounds;
+//        //frameLayer.path = maskPath.CGPath;
+//        frameLayer.strokeColor = [UIColor redColor].CGColor;
+//        frameLayer.fillColor = nil;
+        
+        //[self.layer addSublayer:frameLayer];
+        
     }
+    
     override func viewDidLayoutSubviews() {
-        var resizedImageFrame = AVMakeRectWithAspectRatioInsideRect(imageToEdit.image!.size, imageToEdit.bounds)
+        resizedImageFrame = AVMakeRectWithAspectRatioInsideRect(imageToEdit.image!.size, imageToEdit.bounds)
         let resizedImageCenter = imageToEdit.center
         let resizedImageX = resizedImageCenter.x - (resizedImageFrame.width / 2)
         let resizedImageY = resizedImageCenter.y - (resizedImageFrame.height / 2)
         resizedImageFrame.origin = CGPoint(x: resizedImageX, y: resizedImageY)
+        maskedImage.frame = resizedImageFrame
         imageCropper.frame = resizedImageFrame
         currentImageFrame = resizedImageFrame
+        
+        let path = CGPathCreateWithRect(imageCropper.frame,  nil)
+        let borderLayer = CAShapeLayer()
+        borderLayer.frame = imageCropper.bounds
+        borderLayer.path = path
+        borderLayer.strokeColor = UIColor.whiteColor().CGColor
+        borderLayer.fillColor = nil
+        
+        imageCropper.layer.addSublayer(borderLayer)
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -54,7 +86,8 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         
-        // FIXME: If the sides are too close how does it know which one it is moving?
+        axisChange.removeAll()
+        
         let imageCropperFrame = imageCropper.frame
         let leftBorder = UIView(frame: CGRect(x: imageCropperFrame.origin.x - panBuffer, y: imageCropperFrame.origin.y - panBuffer, width: 2 * panBuffer, height: imageCropperFrame.height + (2 * panBuffer)))
         let rightBorder = UIView(frame: CGRectOffset(leftBorder.frame, imageCropperFrame.width, 0))
@@ -70,7 +103,7 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         let inRightBorder = rightBorder.pointInside(touchRelativeToRightBorder, withEvent: nil)
         let inTopBorder = topBorder.pointInside(touchRelativeToTopBorder, withEvent: nil)
         let inBottomBorder = bottomBorder.pointInside(touchRelativeToBottomBorder, withEvent: nil)
-
+        
         if inLeftBorder || inRightBorder || inTopBorder || inBottomBorder {
             if inLeftBorder {
                 axisChange.append(.Left)
@@ -91,263 +124,143 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         
-        let translation = recognizer.translationInView(self.view)
-        var currentFrame = imageCropper.frame
-        
-        for change in axisChange {
-            switch change {
-            case .Left: moveLeft(translation, currentFrame: &currentFrame)
-            case .Right: moveRight(translation, currentFrame: &currentFrame)
-            case .Top: moveTop(translation, currentFrame: &currentFrame)
-            case .Bottom: moveBottom(translation, currentFrame: &currentFrame)
+        if recognizer.state == .Began || recognizer.state == .Changed {
+            
+            let translation = recognizer.translationInView(self.view)
+            var currentFrame = imageCropper.frame
+            
+            for change in axisChange {
+                switch change {
+                case .Left: moveLeft(translation, currentFrame: &currentFrame)
+                case .Right: moveRight(translation, currentFrame: &currentFrame)
+                case .Top: moveTop(translation, currentFrame: &currentFrame)
+                case .Bottom: moveBottom(translation, currentFrame: &currentFrame)
+                }
             }
+            
+            imageCropper.frame = currentFrame
+            recognizer.setTranslation(CGPointZero, inView: self.view)
         }
         
-        imageCropper.frame = currentFrame
-        
-        recognizer.setTranslation(CGPointZero, inView: self.view)
+        if recognizer.state == .Ended {
+            NSTimer.scheduledTimerWithTimeInterval(0.7, target: self, selector: #selector(self.updateImage), userInfo: nil, repeats: false)
+        }
     }
     
     func moveLeft(translation: CGPoint, inout currentFrame: CGRect) {
+        
+        if (currentFrame.width == minimumSideLength && translation.x > 0) ||
+            currentFrame.minX < currentImageFrame.minX - outOfBoundsBuffer && (translation.x < 0 || currentFrame.width == minimumSideLength) {
+            return
+        }
+        
         currentFrame.origin.x = currentFrame.origin.x + translation.x
-        print("Translation is \(translation.x) and CurrentFrameX is \(currentFrame.origin.x) and CurrentImageFrameX is \(currentImageFrame.minX)")
-        print(translation.x < 0 && currentFrame.origin.x <= (currentImageFrame.minX - outOfBoundsBuffer))
         currentFrame.size.width = currentFrame.width - translation.x
         
         if currentFrame.width < minimumSideLength {
+            currentFrame.origin.x += currentFrame.width - minimumSideLength
             currentFrame.size.width = minimumSideLength
-            
-            if currentFrame.maxX > (currentImageFrame.maxX + outOfBoundsBuffer) {
-                currentFrame.origin.x = currentFrame.origin.x - (currentFrame.maxX - (currentImageFrame.maxX + outOfBoundsBuffer))
-            }
         }
         
         if currentFrame.minX < currentImageFrame.minX - outOfBoundsBuffer {
-            currentFrame.origin.x = currentImageFrame.minX - outOfBoundsBuffer
+            let previousOriginX = currentFrame.origin.x
             
-            if currentFrame.maxX > (currentImageFrame.maxX + outOfBoundsBuffer) {
-                currentFrame.size.width = (currentImageFrame.maxX + outOfBoundsBuffer) - currentFrame.origin.x
-            }
+            currentFrame.origin.x = currentImageFrame.minX - outOfBoundsBuffer
+            currentFrame.size.width -= currentFrame.origin.x - previousOriginX
         }
     }
     
     func moveRight(translation: CGPoint, inout currentFrame: CGRect) {
-        currentFrame.size.width = currentFrame.maxX + translation.x
+        
+        if (currentFrame.width == minimumSideLength && translation.x < 0) ||
+            currentFrame.maxX > currentImageFrame.maxX - outOfBoundsBuffer && (translation.x > 0 || currentFrame.width == minimumSideLength) {
+            return
+        }
+        
+        currentFrame.size.width = currentFrame.width + translation.x
         
         if currentFrame.width < minimumSideLength {
             currentFrame.size.width = minimumSideLength
         }
         
         if currentFrame.maxX > (currentImageFrame.maxX + outOfBoundsBuffer) {
-            currentFrame.origin.x = currentFrame.origin.x - (currentFrame.maxX - (currentImageFrame.maxX + outOfBoundsBuffer))
+            currentFrame.size.width -= currentFrame.maxX - (currentImageFrame.maxX + outOfBoundsBuffer)
         }
     }
     
     func moveTop(translation: CGPoint, inout currentFrame: CGRect) {
+        
+        if (currentFrame.height == minimumSideLength && translation.y > 0) ||
+            currentFrame.minY < currentImageFrame.minY - outOfBoundsBuffer && (translation.y < 0 || currentFrame.height == minimumSideLength) {
+            return
+        }
+        
         currentFrame.origin.y = currentFrame.origin.y + translation.y
         currentFrame.size.height = currentFrame.height - translation.y
         
         if currentFrame.height < minimumSideLength {
+            currentFrame.origin.y += currentFrame.height - minimumSideLength
             currentFrame.size.height = minimumSideLength
-            
-            if currentFrame.maxY > (currentImageFrame.maxY + outOfBoundsBuffer) {
-                currentFrame.origin.y = currentFrame.origin.y - (currentFrame.maxY - (currentImageFrame.maxY + outOfBoundsBuffer))
-            }
         }
         
         if currentFrame.minY < currentImageFrame.minY - outOfBoundsBuffer {
+            let previousOriginY = currentFrame.origin.y
+            
             currentFrame.origin.y = currentImageFrame.minY - outOfBoundsBuffer
+            currentFrame.size.height -= currentFrame.origin.y - previousOriginY
         }
-
     }
     
     func moveBottom(translation: CGPoint, inout currentFrame: CGRect) {
-        currentFrame.size.height = currentFrame.maxY + translation.y
+        
+        if (currentFrame.height == minimumSideLength && translation.y < 0) ||
+            currentFrame.maxY > currentImageFrame.maxY - outOfBoundsBuffer && (translation.y > 0 || currentFrame.height == minimumSideLength) {
+            return
+        }
+        
+        currentFrame.size.height = currentFrame.height + translation.y
         
         if currentFrame.height < minimumSideLength {
             currentFrame.size.height = minimumSideLength
         }
         
         if currentFrame.maxY > (currentImageFrame.maxY + outOfBoundsBuffer) {
-            currentFrame.origin.y = currentFrame.origin.y - (currentFrame.maxY - (currentImageFrame.maxY + outOfBoundsBuffer))
+            currentFrame.size.height -= currentFrame.maxY - (currentImageFrame.maxY + outOfBoundsBuffer)
         }
-
+    }
+    
+    func updateImage() {
+        let croppingFrame = imageCropper.frame
+        var orientationToSet = UIImageOrientation.Up
+        
+        let xScale = imageToEdit.image!.size.width / currentImageFrame.size.width
+        let yScale = imageToEdit.image!.size.height / currentImageFrame.size.height
+        
+        let xRelativeToImage = croppingFrame.origin.x - currentImageFrame.origin.x
+        let yRelativeToImage = croppingFrame.origin.y - currentImageFrame.origin.y
+        
+        var newX = xScale * xRelativeToImage
+        var newY = yScale * yRelativeToImage
+        
+        var newWidth = xScale * croppingFrame.width
+        var newHeight = yScale * croppingFrame.height
+        
+        if imageToEdit.image!.imageOrientation == .Right {
+            newX = xScale * yRelativeToImage
+            newY = yScale * (currentImageFrame.maxX - croppingFrame.maxX)
+            newWidth = xScale * croppingFrame.height
+            newHeight = yScale * croppingFrame.width
+            orientationToSet = .Right
+        }
+        
+        let newOrigin = CGPoint(x: newX, y: newY)
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        let newFrame = CGRect(origin: newOrigin, size: newSize)
+        
+        let croppableImage = imageToEdit.image!.CGImage
+        let croppedImage = CGImageCreateWithImageInRect(croppableImage, newFrame)
+        let croppedUIImage = UIImage(CGImage: croppedImage!, scale: 1, orientation: orientationToSet)
+        imageToEdit.image = croppedUIImage
+        maskedImage.image = croppedUIImage
     }
 }
-        
-//        var changes = (xOrigin: 0, yOrigin: 0, width: 0, height: 0)
-//        
-//        if axisChange.horizontalChange == .Left {
-//            changes.xOrigin = 1
-//            changes.width = 1
-//        } else if axisChange.horizontalChange == .Right {
-//            changes.width = -1
-//        }
-//        
-//        if axisChange.verticleChange == .Top {
-//            changes.yOrigin = 1
-//            changes.height  = 1
-//        } else if axisChange.verticleChange == .Bottom {
-//            changes.height = -1
-//        }
-//        
-//        updateFrame(changes, translation: translation)
-//        recognizer.setTranslation(CGPointZero, inView: self.view)
-//        
-//        if recognizer.state == .Ended {
-//            axisChange = (.None, .None)
-//        }
-//    }
-//    
-//    func updateFrame(changes: (xOrigin: Int, yOrigin: Int, width: Int, height: Int), translation: CGPoint) {
-//        let outOfBoundsBuffer = CGFloat(5)
-//        let minimumSideLength = CGFloat(40)
-//
-//        
-//        let imageCropperFrame = imageCropper.frame
-//        
-//        imageCropper.frame = newFrame
-//        
-//                var newFrame = CGRect()
-//                newFrame.origin = CGPoint(x: newXOrigin, y: newYOrigin)
-//                newFrame.size = CGSize(width: newWidth, height: newHeight)
-
-
-        
-//        let maximumWidth = currentImageFrame.width + (2 * outOfBoundsBuffer)
-//        let maximumHeight = currentImageFrame.height + (2 * outOfBoundsBuffer)
-//        
-//        var newXOrigin = imageCropperFrame.origin.x + (CGFloat(changes.xOrigin) * translation.x)
-//        
-//        if newXOrigin < currentImageFrame.minX - outOfBoundsBuffer {
-//            newXOrigin = currentImageFrame.minX - outOfBoundsBuffer
-//        }
-//        
-//        if newXOrigin  > (currentImage.frame.maxX + outOfBoundsBuffer) {
-//            frame.origin.x = frame.origin.x - (frame.maxX - (currentImage.frame.maxX + outOfBoundsBuffer))
-//        }
-//        
-//        print("==========\nnewXOrigin is \(newXOrigin)")
-//        
-//        var newYOrigin = imageCropperFrame.origin.y + (CGFloat(changes.yOrigin) * translation.y)
-//        
-//        if newYOrigin < imageCropperFrame.minY - outOfBoundsBuffer {
-//            newYOrigin = imageCropperFrame.minY - outOfBoundsBuffer
-//        }
-//        
-//        print("===========\n---newXOrigin is \(newXOrigin)\n---newYOrigin is \(newYOrigin)")
-//        
-//        var newWidth = imageCropperFrame.width - (CGFloat(changes.width) * translation.x)
-//        
-//        if newWidth < minimumSideLength {
-//            newWidth = minimumSideLength
-//            
-//            if (newXOrigin + newWidth) > (currentImageFrame.maxX + outOfBoundsBuffer) {
-//                newXOrigin = (currentImageFrame.maxX + outOfBoundsBuffer) - newWidth
-//            }
-//        
-//        } else if newWidth > maximumWidth {
-//            newWidth = maximumWidth
-//        }
-//        
-//        print("===========\n---newXOrigin is \(newXOrigin)\n---newYOrigin is \(newYOrigin)\n---newWidth is \(newWidth)")
-//
-//        
-//        var newHeight = imageCropperFrame.height - (CGFloat(changes.height) * translation.y)
-//        
-//        if newHeight < minimumSideLength {
-//            newHeight = minimumSideLength
-//            
-//            if (newYOrigin + newHeight) > (currentImageFrame.maxY + outOfBoundsBuffer) {
-//                newYOrigin = (currentImageFrame.maxY + outOfBoundsBuffer) - newHeight
-//            }
-//            
-//        } else if newHeight > maximumHeight {
-//            newHeight = maximumHeight
-//        }
-//    
-//        print("===========\n---newXOrigin is \(newXOrigin)\n---newYOrigin is \(newYOrigin)\n---newWidth is \(newWidth)\n---newHeight is \(newHeight)")
-//        
-        
-        //checkFrameForMinimumSize(&newFrame)
-        //checkFrameForOutOfBounds(&newFrame)
-
-//    }
-    
-//    func checkFrameForMinimumSize(inout frame: CGRect) {
-//        let minimumSideLength = CGFloat(40)
-//        let outOfBoundsBuffer = CGFloat(5)
-//        
-//        if frame.width < minimumSideLength {
-//            
-//            frame.size.width = minimumSideLength
-//            
-//            if frame.minX < currentImageFrame.minX - outOfBoundsBuffer {
-//                frame.origin.x = currentImageFrame.minX - outOfBoundsBuffer
-//            }
-//            
-//            if frame.minY < currentImageFrame.minY - outOfBoundsBuffer {
-//                frame.origin.y = currentImageFrame.minY - outOfBoundsBuffer
-//            }
-//            
-//            if frame.maxX > currentImageFrame.maxX + outOfBoundsBuffer {
-//                frame.origin.x = frame.minX - (currentImageFrame.maxX + outOfBoundsBuffer)
-//            }
-//            
-//            if frame.maxY > currentImageFrame.maxY + outOfBoundsBuffer {
-//                frame.origin.y = frame.minY - (currentImageFrame.maxY + outOfBoundsBuffer)
-//            }
-//        }
-//        
-//        if frame.height < minimumSideLength {
-//            
-//            frame.size.height = minimumSideLength
-//            
-//            if frame.minX < currentImageFrame.minX - outOfBoundsBuffer {
-//                frame.origin.x = currentImageFrame.minX - outOfBoundsBuffer
-//            }
-//            
-//            if frame.minY < currentImageFrame.minY - outOfBoundsBuffer {
-//                frame.origin.y = currentImageFrame.minY - outOfBoundsBuffer
-//            }
-//            
-//            if frame.maxX > currentImageFrame.maxX + outOfBoundsBuffer {
-//                frame.origin.x = frame.minX - (currentImageFrame.maxX + outOfBoundsBuffer)
-//            }
-//            
-//            if frame.maxY > currentImageFrame.maxY + outOfBoundsBuffer {
-//                frame.origin.y = frame.minY - (currentImageFrame.maxY + outOfBoundsBuffer)
-//            }
-//        }
-//        
-//        if frame.minX < currentImageFrame.minX - outOfBoundsBuffer {
-//            frame.origin.x = currentImageFrame.minX - outOfBoundsBuffer
-//        }
-//        if frame.maxX > currentImageFrame.maxX + outOfBoundsBuffer {
-//            frame.size.width = frame.width - (frame.maxX - currentImageFrame.maxX) + outOfBoundsBuffer
-//        }
-//        if frame.minY < currentImageFrame.minY - outOfBoundsBuffer {
-//            frame.origin.y = currentImageFrame.minY - outOfBoundsBuffer
-//        }
-//        if frame.maxY > currentImageFrame.maxY + outOfBoundsBuffer {
-//            frame.size.height = frame.height - (frame.maxY - currentImageFrame.maxY) + outOfBoundsBuffer
-//        }
-//    }
-//    
-//    func checkFrameForOutOfBounds(inout frame: CGRect) {
-//
-//        let outOfBoundsBuffer = CGFloat(5)
-//        
-//        if frame.minX < currentImageFrame.minX - outOfBoundsBuffer {
-//            frame.origin.x = currentImageFrame.minX - outOfBoundsBuffer
-//        }
-//        if frame.maxX > currentImageFrame.maxX + outOfBoundsBuffer {
-//            frame.size.width = frame.width - (frame.maxX - currentImageFrame.maxX) + outOfBoundsBuffer
-//        }
-//        if frame.minY < currentImageFrame.minY - outOfBoundsBuffer {
-//            frame.origin.y = currentImageFrame.minY - outOfBoundsBuffer
-//        }
-//        if frame.maxY > currentImageFrame.maxY + outOfBoundsBuffer {
-//            frame.size.height = frame.height - (frame.maxY - currentImageFrame.maxY) + outOfBoundsBuffer
-//        }
-//    }
