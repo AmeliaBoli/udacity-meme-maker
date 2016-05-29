@@ -18,7 +18,7 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     
     @IBOutlet weak var maskedImage: UIImageView!
     @IBOutlet weak var imageToEdit: UIImageView!
-    @IBOutlet weak var imageCropper: UIView!
+    //@IBOutlet weak var imageCropper: UIView!
     @IBOutlet var panGesture: UIPanGestureRecognizer!
     
     var image = UIImage()
@@ -26,9 +26,9 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     var axisChange = [Edge]() //(horizontalChange: Edge.None, verticleChange: Edge.None)
     var currentImageFrame = CGRect()
     
-    var imageCropperFrame: CGRect {
-        return imageCropper.frame
-    }
+//    var imageCropperFrame: CGRect {
+//        return imageCropper.frame
+//    }
     
     var resizedImageFrame = CGRect()
     
@@ -48,7 +48,7 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
 //        borderLayer.masksToBounds = true
 //        imageToEdit.layer.addSublayer(borderLayer)
 
-        imageToEdit.maskView = imageCropper
+        //imageToEdit.maskView = imageCropper
         
 //        CAShapeLayer*   frameLayer = [CAShapeLayer layer];
 //        frameLayer.frame = bounds;
@@ -57,6 +57,8 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
 //        frameLayer.fillColor = nil;
         
         //[self.layer addSublayer:frameLayer];
+        
+     
         
     }
     
@@ -67,17 +69,32 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         let resizedImageY = resizedImageCenter.y - (resizedImageFrame.height / 2)
         resizedImageFrame.origin = CGPoint(x: resizedImageX, y: resizedImageY)
         maskedImage.frame = resizedImageFrame
-        imageCropper.frame = resizedImageFrame
+        //imageCropper.frame = resizedImageFrame
         currentImageFrame = resizedImageFrame
         
-        let path = CGPathCreateWithRect(imageCropper.frame,  nil)
-        let borderLayer = CAShapeLayer()
-        borderLayer.frame = imageCropper.bounds
-        borderLayer.path = path
-        borderLayer.strokeColor = UIColor.whiteColor().CGColor
-        borderLayer.fillColor = nil
+        let constraints = imageToEdit.constraints
+        for constraint in constraints {
+            print("===\n\(constraint.identifier)")
+        }
         
-        imageCropper.layer.addSublayer(borderLayer)
+        let path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: resizedImageX, y: resizedImageY), size: resizedImageFrame.size), nil)
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = CGRect(origin: CGPointZero, size: resizedImageFrame.size)
+        maskLayer.path = path
+        
+        imageToEdit.layer.mask = maskLayer
+        
+        let borderLayer = CAShapeLayer()
+        borderLayer.frame = CGRect(origin: CGPointZero, size: resizedImageFrame.size)
+        borderLayer.path = path
+        borderLayer.strokeColor = UIColor.blueColor().CGColor
+        borderLayer.fillColor = nil
+        borderLayer.lineWidth = 5
+        
+        imageToEdit.layer.addSublayer(borderLayer)
+
+        
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -88,11 +105,11 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         
         axisChange.removeAll()
         
-        let imageCropperFrame = imageCropper.frame
-        let leftBorder = UIView(frame: CGRect(x: imageCropperFrame.origin.x - panBuffer, y: imageCropperFrame.origin.y - panBuffer, width: 2 * panBuffer, height: imageCropperFrame.height + (2 * panBuffer)))
-        let rightBorder = UIView(frame: CGRectOffset(leftBorder.frame, imageCropperFrame.width, 0))
-        let topBorder = UIView(frame: CGRect(x: imageCropperFrame.origin.x - panBuffer, y: imageCropperFrame.origin.y - panBuffer, width: imageCropperFrame.width + (2 * panBuffer), height: 2 * panBuffer))
-        let bottomBorder = UIView(frame: CGRectOffset(topBorder.frame, 0, imageCropperFrame.height))
+        let imageToEditFrame = imageToEdit.frame
+        let leftBorder = UIView(frame: CGRect(x: imageToEditFrame.origin.x - panBuffer, y: imageToEditFrame.origin.y - panBuffer, width: 2 * panBuffer, height: imageToEditFrame.height + (2 * panBuffer)))
+        let rightBorder = UIView(frame: CGRectOffset(leftBorder.frame, imageToEditFrame.width, 0))
+        let topBorder = UIView(frame: CGRect(x: imageToEditFrame.origin.x - panBuffer, y: imageToEditFrame.origin.y - panBuffer, width: imageToEditFrame.width + (2 * panBuffer), height: 2 * panBuffer))
+        let bottomBorder = UIView(frame: CGRectOffset(topBorder.frame, 0, imageToEditFrame.height))
         
         let touchRelativeToLeftBorder = touch.locationInView(leftBorder)
         let touchRelativeToRightBorder = touch.locationInView(rightBorder)
@@ -127,7 +144,7 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         if recognizer.state == .Began || recognizer.state == .Changed {
             
             let translation = recognizer.translationInView(self.view)
-            var currentFrame = imageCropper.frame
+            var currentFrame = imageToEdit.frame
             
             for change in axisChange {
                 switch change {
@@ -138,7 +155,7 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
                 }
             }
             
-            imageCropper.frame = currentFrame
+            imageToEdit.frame = currentFrame
             recognizer.setTranslation(CGPointZero, inView: self.view)
         }
         
@@ -230,7 +247,7 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     }
     
     func updateImage() {
-        let croppingFrame = imageCropper.frame
+        let croppingFrame = imageToEdit.frame
         var orientationToSet = UIImageOrientation.Up
         
         let xScale = imageToEdit.image!.size.width / currentImageFrame.size.width
