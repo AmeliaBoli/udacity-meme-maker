@@ -19,6 +19,8 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     @IBOutlet weak var maskedImage: UIImageView!
     @IBOutlet weak var imageToEdit: UIImageView!
     @IBOutlet weak var imageCropper: UIView!
+    @IBOutlet weak var imageCropperBorder: UIView!
+    
     @IBOutlet var panGesture: UIPanGestureRecognizer!
     
     var image = UIImage()
@@ -42,22 +44,10 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
        
         panGesture.delegate = self
         
-//        let borderLayer = CALayer()
-//        borderLayer.borderWidth = 1.0
-//        borderLayer.borderColor = UIColor.whiteColor().CGColor
-//        borderLayer.masksToBounds = true
-//        imageToEdit.layer.addSublayer(borderLayer)
-
-        imageToEdit.maskView = imageCropper
+        //imageToEdit.maskView = imageCropper
         
-//        CAShapeLayer*   frameLayer = [CAShapeLayer layer];
-//        frameLayer.frame = bounds;
-//        //frameLayer.path = maskPath.CGPath;
-//        frameLayer.strokeColor = [UIColor redColor].CGColor;
-//        frameLayer.fillColor = nil;
-        
-        //[self.layer addSublayer:frameLayer];
-        
+        imageCropperBorder.layer.borderColor = UIColor.whiteColor().CGColor
+        imageCropperBorder.layer.borderWidth = 3
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,16 +58,8 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         resizedImageFrame.origin = CGPoint(x: resizedImageX, y: resizedImageY)
         maskedImage.frame = resizedImageFrame
         imageCropper.frame = resizedImageFrame
+        imageCropperBorder.frame = resizedImageFrame
         currentImageFrame = resizedImageFrame
-        
-        let path = CGPathCreateWithRect(imageCropper.frame,  nil)
-        let borderLayer = CAShapeLayer()
-        borderLayer.frame = imageCropper.bounds
-        borderLayer.path = path
-        borderLayer.strokeColor = UIColor.whiteColor().CGColor
-        borderLayer.fillColor = nil
-        
-        imageCropper.layer.addSublayer(borderLayer)
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -139,6 +121,7 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
             }
             
             imageCropper.frame = currentFrame
+            imageCropperBorder.frame = currentFrame
             recognizer.setTranslation(CGPointZero, inView: self.view)
         }
         
