@@ -8,11 +8,6 @@
 
 import UIKit
 import AVFoundation
-//import CoreImage
-
-enum Edge {
-    case Left, Right, Top, Bottom
-}
 
 class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -23,19 +18,22 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     
     @IBOutlet var panGesture: UIPanGestureRecognizer!
     
-    var image = UIImage()
-    let panBuffer = CGFloat(15)
-    var axisChange = [Edge]() //(horizontalChange: Edge.None, verticleChange: Edge.None)
-    var currentImageFrame = CGRect()
-    
-    var imageCropperFrame: CGRect {
-        return imageCropper.frame
+    enum Edge {
+        case Left, Right, Top, Bottom
     }
     
-    var resizedImageFrame = CGRect()
-    
+    var image = UIImage()
+    var axisChange = [Edge]()
+
+    let panBuffer = CGFloat(15)
     let outOfBoundsBuffer = CGFloat(5)
     let minimumSideLength = CGFloat(40)
+    
+    var cropperXOffset = CGFloat(0)
+    var cropperYOffset = CGFloat(0)
+    
+    var currentImageFrame = CGRect()
+    var resizedImageFrame = CGRect()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +41,20 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         maskedImage.image = image
        
         panGesture.delegate = self
-        
-        //imageToEdit.maskView = imageCropper
+
+        imageToEdit.maskView = imageCropper
         
         imageCropperBorder.layer.borderColor = UIColor.whiteColor().CGColor
-        imageCropperBorder.layer.borderWidth = 3
+        imageCropperBorder.layer.borderWidth = 1
+        
+        let constraints = self.view.constraints
+        for constraint in constraints {
+            if constraint.identifier == "leading" {
+                cropperXOffset = constraint.constant
+            } else if constraint.identifier == "top" {
+                cropperYOffset = constraint.constant
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,25 +63,30 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         let resizedImageX = resizedImageCenter.x - (resizedImageFrame.width / 2)
         let resizedImageY = resizedImageCenter.y - (resizedImageFrame.height / 2)
         resizedImageFrame.origin = CGPoint(x: resizedImageX, y: resizedImageY)
-        maskedImage.frame = resizedImageFrame
-        imageCropper.frame = resizedImageFrame
-        imageCropperBorder.frame = resizedImageFrame
         currentImageFrame = resizedImageFrame
+        imageCropperBorder.frame = resizedImageFrame
+        imageCropper.frame = CGRectOffset(resizedImageFrame, -cropperXOffset, -cropperYOffset)
     }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
     
+    @IBAction func resetImage(sender: UIBarButtonItem) {
+        maskedImage.image = image
+        imageToEdit.image = image
+    }
+    
+    // Cropping Handling
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         
         axisChange.removeAll()
         
-        let imageCropperFrame = imageCropper.frame
-        let leftBorder = UIView(frame: CGRect(x: imageCropperFrame.origin.x - panBuffer, y: imageCropperFrame.origin.y - panBuffer, width: 2 * panBuffer, height: imageCropperFrame.height + (2 * panBuffer)))
-        let rightBorder = UIView(frame: CGRectOffset(leftBorder.frame, imageCropperFrame.width, 0))
-        let topBorder = UIView(frame: CGRect(x: imageCropperFrame.origin.x - panBuffer, y: imageCropperFrame.origin.y - panBuffer, width: imageCropperFrame.width + (2 * panBuffer), height: 2 * panBuffer))
-        let bottomBorder = UIView(frame: CGRectOffset(topBorder.frame, 0, imageCropperFrame.height))
+        let imageCropperBorderFrame = imageCropperBorder.frame
+        let leftBorder = UIView(frame: CGRect(x: imageCropperBorderFrame.origin.x - panBuffer, y: imageCropperBorderFrame.origin.y - panBuffer, width: 2 * panBuffer, height: imageCropperBorderFrame.height + (2 * panBuffer)))
+        let rightBorder = UIView(frame: CGRectOffset(leftBorder.frame, imageCropperBorderFrame.width, 0))
+        let topBorder = UIView(frame: CGRect(x: imageCropperBorderFrame.origin.x - panBuffer, y: imageCropperBorderFrame.origin.y - panBuffer, width: imageCropperBorderFrame.width + (2 * panBuffer), height: 2 * panBuffer))
+        let bottomBorder = UIView(frame: CGRectOffset(topBorder.frame, 0, imageCropperBorderFrame.height))
         
         let touchRelativeToLeftBorder = touch.locationInView(leftBorder)
         let touchRelativeToRightBorder = touch.locationInView(rightBorder)

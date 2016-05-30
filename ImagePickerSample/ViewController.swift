@@ -40,8 +40,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIApplication.sharedApplication().statusBarHidden = true
         shareButton.enabled = false
         cropButton.enabled = false
-        
-        
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -147,11 +145,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // Image Management
-//    @IBAction func cropImage(sender: UIBarButtonItem) {
-//    }
-    
-    
     // Keyboard Confirguration
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo
@@ -242,8 +235,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
-        let sourceViewController = segue.sourceViewController as! ImageEdittingViewController
-        self.pickedImage.image = sourceViewController.imageToEdit.image
+        if segue.identifier == "done" {
+            let sourceViewController = segue.sourceViewController as! ImageEdittingViewController
+            self.pickedImage.image = sourceViewController.imageToEdit.image
+        }
     }
 }
 

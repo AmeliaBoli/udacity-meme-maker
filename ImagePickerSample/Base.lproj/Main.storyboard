@@ -31,7 +31,7 @@
                                                 <action selector="shareMeme:" destination="BYZ-38-t0r" id="9UC-QP-Xtc"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="EqC-Gk-Yrs">
+                                        <barButtonItem key="rightBarButtonItem" title="Clear" id="EqC-Gk-Yrs">
                                             <connections>
                                                 <action selector="cancelPressed:" destination="BYZ-38-t0r" id="qVE-7y-cHX"/>
                                             </connections>
@@ -149,27 +149,32 @@
                                 <items>
                                     <barButtonItem title="Cancel" id="LDX-gY-OHR">
                                         <connections>
-                                            <segue destination="w78-xV-PYR" kind="unwind" unwindAction="prepareForUnwind:" id="uiM-UT-Qin"/>
+                                            <segue destination="w78-xV-PYR" kind="unwind" identifier="cancel" unwindAction="prepareForUnwind:" id="2T0-mQ-Ywz"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="q6W-wu-xki"/>
+                                    <barButtonItem title="Reset" id="88n-wS-kDv">
+                                        <connections>
+                                            <action selector="resetImage:" destination="aZp-et-zwN" id="Q52-4p-98M"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="piN-cP-eRS"/>
                                     <barButtonItem title="Done" id="bJN-gl-zsa">
                                         <connections>
-                                            <segue destination="w78-xV-PYR" kind="unwind" unwindAction="prepareForUnwind:" id="B9z-dk-PG8"/>
+                                            <segue destination="w78-xV-PYR" kind="unwind" identifier="done" unwindAction="prepareForUnwind:" id="ZRE-FF-uLM"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
                             <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="izI-CB-Kzx">
-                                <rect key="frame" x="10" y="30" width="580" height="516"/>
+                                <rect key="frame" x="30" y="60" width="550" height="476"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="agH-Fh-T17">
-                                <rect key="frame" x="10" y="30" width="580" height="516"/>
+                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="agH-Fh-T17">
+                                <rect key="frame" x="30" y="60" width="550" height="476"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z8B-gi-hDQ">
-                                <rect key="frame" x="15" y="35" width="570" height="506"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PdO-eU-8QH">
+                                <rect key="frame" x="180" y="236" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kh1-VO-PFc">
                                 <rect key="frame" x="180" y="236" width="240" height="128"/>
@@ -179,47 +184,23 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="qHU-FR-psL" secondAttribute="bottom" id="0j0-LG-VX4"/>
-                            <constraint firstAttribute="trailing" secondItem="izI-CB-Kzx" secondAttribute="trailing" constant="10" id="1LM-5Z-v6X"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leadingMargin" id="1Za-21-ias"/>
+                            <constraint firstAttribute="trailing" secondItem="izI-CB-Kzx" secondAttribute="trailing" constant="20" id="1LM-5Z-v6X"/>
                             <constraint firstAttribute="trailing" secondItem="qHU-FR-psL" secondAttribute="trailing" id="9kU-bd-Nej"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="top" secondItem="agH-Fh-T17" secondAttribute="top" id="CId-dr-Ago"/>
-                            <constraint firstItem="izI-CB-Kzx" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" constant="10" id="Izn-wz-FqG"/>
-                            <constraint firstItem="izI-CB-Kzx" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" constant="10" id="Jq1-xd-gt0"/>
-                            <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="Z8B-gi-hDQ" secondAttribute="bottom" constant="15" id="Mmv-dD-NRU"/>
-                            <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="agH-Fh-T17" secondAttribute="bottom" constant="10" id="TtC-Xk-llT"/>
-                            <constraint firstItem="agH-Fh-T17" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" constant="10" id="Ukv-Fo-TT1"/>
-                            <constraint firstItem="agH-Fh-T17" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" constant="10" id="Wrj-hr-k5j"/>
+                            <constraint firstItem="izI-CB-Kzx" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" constant="40" id="Izn-wz-FqG"/>
+                            <constraint firstItem="izI-CB-Kzx" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" constant="30" id="Jq1-xd-gt0"/>
+                            <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="agH-Fh-T17" secondAttribute="bottom" constant="20" id="TtC-Xk-llT"/>
+                            <constraint firstItem="agH-Fh-T17" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" constant="40" identifier="top" id="Ukv-Fo-TT1"/>
+                            <constraint firstItem="agH-Fh-T17" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" constant="30" identifier="leading" id="Wrj-hr-k5j"/>
                             <constraint firstItem="qHU-FR-psL" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" id="Ynf-g9-h2A"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="leading" secondItem="Heu-OG-wNh" secondAttribute="leading" constant="15" id="cv8-d4-8JR"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Z8B-gi-hDQ" secondAttribute="trailing" id="dMS-Ke-0mm"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" constant="15" id="e7v-Jb-AFI"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="top" secondItem="co2-N4-CbC" secondAttribute="bottom" id="iVp-in-oBL"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="leading" secondItem="agH-Fh-T17" secondAttribute="leading" id="l5k-8a-y0o"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="trailing" secondItem="agH-Fh-T17" secondAttribute="trailing" id="m5d-GL-6iX"/>
-                            <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="izI-CB-Kzx" secondAttribute="bottom" constant="10" id="oeV-pY-WxD"/>
-                            <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="Z8B-gi-hDQ" secondAttribute="bottom" id="omW-9z-JDU"/>
-                            <constraint firstAttribute="trailing" secondItem="Z8B-gi-hDQ" secondAttribute="trailing" constant="15" id="pxh-bU-B8s"/>
-                            <constraint firstAttribute="trailing" secondItem="agH-Fh-T17" secondAttribute="trailing" constant="10" id="rbE-Ae-V1C"/>
-                            <constraint firstItem="Z8B-gi-hDQ" firstAttribute="bottom" secondItem="agH-Fh-T17" secondAttribute="bottom" id="vLz-c1-Tr2"/>
+                            <constraint firstItem="qHU-FR-psL" firstAttribute="top" secondItem="izI-CB-Kzx" secondAttribute="bottom" constant="20" id="oeV-pY-WxD"/>
+                            <constraint firstAttribute="trailing" secondItem="agH-Fh-T17" secondAttribute="trailing" constant="20" id="rbE-Ae-V1C"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="1Za-21-ias"/>
-                                <exclude reference="CId-dr-Ago"/>
-                                <exclude reference="dMS-Ke-0mm"/>
-                                <exclude reference="iVp-in-oBL"/>
-                                <exclude reference="l5k-8a-y0o"/>
-                                <exclude reference="m5d-GL-6iX"/>
-                                <exclude reference="vLz-c1-Tr2"/>
-                                <exclude reference="omW-9z-JDU"/>
-                            </mask>
-                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Xp4-ZG-iG5" appends="YES" id="yV4-0b-rJc"/>
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="imageCropper" destination="Z8B-gi-hDQ" id="dLN-vB-HU6"/>
+                        <outlet property="imageCropper" destination="PdO-eU-8QH" id="bci-qv-De7"/>
                         <outlet property="imageCropperBorder" destination="Kh1-VO-PFc" id="86a-DU-Zrc"/>
                         <outlet property="imageToEdit" destination="agH-Fh-T17" id="SiX-D2-iKg"/>
                         <outlet property="maskedImage" destination="izI-CB-Kzx" id="BB4-bU-HcB"/>
@@ -234,7 +215,7 @@
                 </panGestureRecognizer>
                 <exit id="w78-xV-PYR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="892" y="280"/>
+            <point key="canvasLocation" x="1015" y="280"/>
         </scene>
     </scenes>
 </document>
