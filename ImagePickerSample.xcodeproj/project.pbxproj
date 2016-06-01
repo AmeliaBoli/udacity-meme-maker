@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9404F82D1CEE8E7E000D6020 /* ImageEdittingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */; };
+		94156FE11CFF7AC900EE45CA /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94156FE01CFF7AC900EE45CA /* HandleView.swift */; };
 		94FC1AAA1CC0C54300464DC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */; };
 		94FC1AAC1CC0C54300464DC7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AAB1CC0C54300464DC7 /* ViewController.swift */; };
 		94FC1AAF1CC0C54300464DC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FC1AAD1CC0C54300464DC7 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdittingViewController.swift; sourceTree = "<group>"; };
+		94156FE01CFF7AC900EE45CA /* HandleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HandleView.swift; path = ../HandleView.swift; sourceTree = "<group>"; };
 		94FC1AA61CC0C54300464DC7 /* ImagePickerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagePickerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94FC1AAB1CC0C54300464DC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */,
 				94FC1AAB1CC0C54300464DC7 /* ViewController.swift */,
 				9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */,
+				94156FE01CFF7AC900EE45CA /* HandleView.swift */,
 				94FC1AAD1CC0C54300464DC7 /* Main.storyboard */,
 				94FC1AB01CC0C54300464DC7 /* Assets.xcassets */,
 				94FC1AB21CC0C54300464DC7 /* LaunchScreen.storyboard */,
@@ -261,6 +264,7 @@
 			files = (
 				9404F82D1CEE8E7E000D6020 /* ImageEdittingViewController.swift in Sources */,
 				94FC1AAC1CC0C54300464DC7 /* ViewController.swift in Sources */,
+				94156FE11CFF7AC900EE45CA /* HandleView.swift in Sources */,
 				94FC1AAA1CC0C54300464DC7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

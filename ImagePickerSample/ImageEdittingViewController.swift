@@ -35,26 +35,20 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     var currentImageFrame = CGRect()
     var resizedImageFrame = CGRect()
     
+    var newGesture = UIPanGestureRecognizer()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imageToEdit.image = image
         maskedImage.image = image
-       
+        
         panGesture.delegate = self
 
         imageToEdit.maskView = imageCropper
         
         imageCropperBorder.layer.borderColor = UIColor.whiteColor().CGColor
         imageCropperBorder.layer.borderWidth = 1
-        
-        let constraints = self.view.constraints
-        for constraint in constraints {
-            if constraint.identifier == "leading" {
-                cropperXOffset = constraint.constant
-            } else if constraint.identifier == "top" {
-                cropperYOffset = constraint.constant
-            }
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,13 +59,97 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         resizedImageFrame.origin = CGPoint(x: resizedImageX, y: resizedImageY)
         currentImageFrame = resizedImageFrame
         imageCropperBorder.frame = resizedImageFrame
-        imageCropper.frame = CGRectOffset(resizedImageFrame, -cropperXOffset, -cropperYOffset)
+        addCornerHandles(imageCropperBorder.bounds)
+        imageCropper.frame = CGRectOffset(resizedImageFrame, -imageToEdit.frame.origin.x, -imageToEdit.frame.origin.y)
     }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
     
+    func addCornerHandles(bounds: CGRect) {
+        //imageCropperBorder.layer.layoutSublayers()
+        
+        if let sublayers = imageCropperBorder.layer.sublayers {
+            for layer in sublayers {
+                layer.removeFromSuperlayer()
+            }
+        }
+        
+        let frameOffset = CGFloat(2)
+        
+        let horizontalSize = CGSize(width: 22, height: 2)
+        let verticalSize = CGSize(width: 2, height: 22)
+        
+        let leftX = CGFloat(bounds.origin.x - frameOffset)
+        let rightX = CGFloat(bounds.maxX - horizontalSize.width + frameOffset)
+        let rightVerticalX = CGFloat(bounds.maxX)
+        let topY = CGFloat(bounds.origin.y - frameOffset)
+        let bottomY = CGFloat(bounds.maxY - verticalSize.height + frameOffset)
+        let bottomHorizontalY = CGFloat(bounds.maxY)
+        
+        let backgroundColor = UIColor.whiteColor().CGColor
+        
+        let topLeft: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: leftX, y: topY), size: horizontalSize)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(topLeft)
+        
+        let topRight: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: rightX, y: topY), size: horizontalSize)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(topRight)
+        
+        let bottomLeft: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: leftX, y: bottomHorizontalY), size: horizontalSize)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(bottomLeft)
+
+        let bottomRight: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: rightX, y: bottomHorizontalY), size: horizontalSize)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(bottomRight)
+        
+        let leftTop: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: leftX, y: topY), size: verticalSize)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(leftTop)
+        
+        let leftBottom: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: leftX, y: bottomY), size: verticalSize)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(leftBottom)
+        
+        let rightTop: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: rightVerticalX, y: topY), size: verticalSize)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(rightTop)
+        
+        let rightBottom: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: rightVerticalX, y: bottomY), size: verticalSize)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(rightBottom)
+        
+//        imageCropperBorder.layer.borderColor = UIColor.whiteColor().CGColor
+//        imageCropperBorder.layer.borderWidth = 1
+    }
+
     @IBAction func resetImage(sender: UIBarButtonItem) {
         maskedImage.image = image
         imageToEdit.image = image
@@ -133,7 +211,12 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
             }
             
             imageCropper.frame = currentFrame
-            imageCropperBorder.frame = currentFrame
+            
+            //UIView.animateWithDuration(0) {
+                self.imageCropperBorder.frame = CGRectOffset(currentFrame, self.imageToEdit.frame.origin.x, self.imageToEdit.frame.origin.y)
+            addCornerHandles(imageCropperBorder.bounds)
+            //}
+            //imageCropperBorder.layer.layoutSublayers()
             recognizer.setTranslation(CGPointZero, inView: self.view)
         }
         
@@ -143,9 +226,13 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
     }
     
     func moveLeft(translation: CGPoint, inout currentFrame: CGRect) {
+        let minX = resizedImageFrame.minX - imageToEdit.frame.minX
         
-        if (currentFrame.width == minimumSideLength && translation.x > 0) ||
-            currentFrame.minX < currentImageFrame.minX - outOfBoundsBuffer && (translation.x < 0 || currentFrame.width == minimumSideLength) {
+        if translation.x == 0 {
+            return
+        } else if translation.x < 0 && currentFrame.minX == minX  {
+            return
+        } else if translation.x > 0 && currentFrame.width == minimumSideLength {
             return
         }
         
@@ -157,18 +244,22 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
             currentFrame.size.width = minimumSideLength
         }
         
-        if currentFrame.minX < currentImageFrame.minX - outOfBoundsBuffer {
+        if currentFrame.minX < minX {
             let previousOriginX = currentFrame.origin.x
             
-            currentFrame.origin.x = currentImageFrame.minX - outOfBoundsBuffer
-            currentFrame.size.width -= currentFrame.origin.x - previousOriginX
+            currentFrame.origin.x = minX
+            currentFrame.size.width += previousOriginX - minX
         }
     }
     
     func moveRight(translation: CGPoint, inout currentFrame: CGRect) {
+        let maxX = currentFrame.minX + currentImageFrame.width
         
-        if (currentFrame.width == minimumSideLength && translation.x < 0) ||
-            currentFrame.maxX > currentImageFrame.maxX - outOfBoundsBuffer && (translation.x > 0 || currentFrame.width == minimumSideLength) {
+        if translation.x == 0 {
+            return
+        } else if translation.x < 0 && currentFrame.width == minimumSideLength {
+            return
+        } else if translation.x > 0 && currentFrame.maxX == maxX {
             return
         }
         
@@ -178,15 +269,19 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
             currentFrame.size.width = minimumSideLength
         }
         
-        if currentFrame.maxX > (currentImageFrame.maxX + outOfBoundsBuffer) {
-            currentFrame.size.width -= currentFrame.maxX - (currentImageFrame.maxX + outOfBoundsBuffer)
+        if currentFrame.maxX > maxX {
+            currentFrame.size.width -= (currentFrame.maxX + imageToEdit.frame.origin.x) - currentImageFrame.maxX
         }
     }
     
     func moveTop(translation: CGPoint, inout currentFrame: CGRect) {
+        let minY = resizedImageFrame.minY - imageToEdit.frame.minY
         
-        if (currentFrame.height == minimumSideLength && translation.y > 0) ||
-            currentFrame.minY < currentImageFrame.minY - outOfBoundsBuffer && (translation.y < 0 || currentFrame.height == minimumSideLength) {
+        if translation.y == 0 {
+            return
+        } else if translation.y < 0 && currentFrame.minY == minY {
+            return
+        } else if translation.y > 0 && currentFrame.height == minimumSideLength {
             return
         }
         
@@ -198,18 +293,22 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
             currentFrame.size.height = minimumSideLength
         }
         
-        if currentFrame.minY < currentImageFrame.minY - outOfBoundsBuffer {
+        if currentFrame.minY < minY {
             let previousOriginY = currentFrame.origin.y
             
-            currentFrame.origin.y = currentImageFrame.minY - outOfBoundsBuffer
-            currentFrame.size.height -= currentFrame.origin.y - previousOriginY
+            currentFrame.origin.y = minY
+            currentFrame.size.height += previousOriginY - minY
         }
     }
     
     func moveBottom(translation: CGPoint, inout currentFrame: CGRect) {
+        let maxY = currentFrame.minY + currentImageFrame.height
         
-        if (currentFrame.height == minimumSideLength && translation.y < 0) ||
-            currentFrame.maxY > currentImageFrame.maxY - outOfBoundsBuffer && (translation.y > 0 || currentFrame.height == minimumSideLength) {
+        if translation.y == 0 {
+            return
+        } else if translation.y < 0 && currentFrame.height == minimumSideLength {
+            return
+        } else if translation.y > 0 && currentFrame.maxY == maxY {
             return
         }
         
@@ -219,32 +318,37 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
             currentFrame.size.height = minimumSideLength
         }
         
-        if currentFrame.maxY > (currentImageFrame.maxY + outOfBoundsBuffer) {
-            currentFrame.size.height -= currentFrame.maxY - (currentImageFrame.maxY + outOfBoundsBuffer)
+        if currentFrame.maxY > maxY {
+            currentFrame.size.height -= (currentFrame.maxY + imageToEdit.frame.origin.y) - currentImageFrame.maxY
         }
     }
     
     func updateImage() {
         let croppingFrame = imageCropper.frame
+        
+        if currentImageFrame == CGRectOffset(croppingFrame, imageToEdit.frame.origin.x, imageToEdit.frame.origin.y) {
+            return
+        }
+        
         var orientationToSet = UIImageOrientation.Up
         
-        let xScale = imageToEdit.image!.size.width / currentImageFrame.size.width
-        let yScale = imageToEdit.image!.size.height / currentImageFrame.size.height
+        let scale = imageToEdit.image!.size.width / currentImageFrame.size.width
+        //let yScale = imageToEdit.image!.size.height / currentImageFrame.size.height
         
-        let xRelativeToImage = croppingFrame.origin.x - currentImageFrame.origin.x
-        let yRelativeToImage = croppingFrame.origin.y - currentImageFrame.origin.y
+        let xRelativeToImage = (croppingFrame.origin.x + imageToEdit.frame.origin.x) - currentImageFrame.origin.x
+        let yRelativeToImage = (croppingFrame.origin.y + imageToEdit.frame.origin.y) - currentImageFrame.origin.y
         
-        var newX = xScale * xRelativeToImage
-        var newY = yScale * yRelativeToImage
+        var newX = scale * xRelativeToImage
+        var newY = scale * yRelativeToImage
         
-        var newWidth = xScale * croppingFrame.width
-        var newHeight = yScale * croppingFrame.height
+        var newWidth = scale * croppingFrame.width
+        var newHeight = scale * croppingFrame.height
         
         if imageToEdit.image!.imageOrientation == .Right {
-            newX = xScale * yRelativeToImage
-            newY = yScale * (currentImageFrame.maxX - croppingFrame.maxX)
-            newWidth = xScale * croppingFrame.height
-            newHeight = yScale * croppingFrame.width
+            newX = scale * yRelativeToImage
+            newY = scale * (currentImageFrame.maxX - (croppingFrame.maxX + imageToEdit.frame.minX))
+            newWidth = scale * croppingFrame.height
+            newHeight = scale * croppingFrame.width
             orientationToSet = .Right
         }
         
