@@ -17,7 +17,7 @@
                BlueprintIdentifier = "94FC1AA51CC0C54300464DC7"
                BuildableName = "ImagePickerSample.app"
                BlueprintName = "ImagePickerSample"
-               ReferencedContainer = "container:ImagePickerSample.xcodeproj">
+               ReferencedContainer = "container:UdacityMemeMe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "94FC1AB91CC0C54400464DC7"
                BuildableName = "ImagePickerSampleTests.xctest"
                BlueprintName = "ImagePickerSampleTests"
-               ReferencedContainer = "container:ImagePickerSample.xcodeproj">
+               ReferencedContainer = "container:UdacityMemeMe.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "94FC1AC41CC0C54400464DC7"
                BuildableName = "ImagePickerSampleUITests.xctest"
                BlueprintName = "ImagePickerSampleUITests"
-               ReferencedContainer = "container:ImagePickerSample.xcodeproj">
+               ReferencedContainer = "container:UdacityMemeMe.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,7 +55,7 @@
             BlueprintIdentifier = "94FC1AA51CC0C54300464DC7"
             BuildableName = "ImagePickerSample.app"
             BlueprintName = "ImagePickerSample"
-            ReferencedContainer = "container:ImagePickerSample.xcodeproj">
+            ReferencedContainer = "container:UdacityMemeMe.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -78,7 +78,7 @@
             BlueprintIdentifier = "94FC1AA51CC0C54300464DC7"
             BuildableName = "ImagePickerSample.app"
             BlueprintName = "ImagePickerSample"
-            ReferencedContainer = "container:ImagePickerSample.xcodeproj">
+            ReferencedContainer = "container:UdacityMemeMe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -97,7 +97,7 @@
             BlueprintIdentifier = "94FC1AA51CC0C54300464DC7"
             BuildableName = "ImagePickerSample.app"
             BlueprintName = "ImagePickerSample"
-            ReferencedContainer = "container:ImagePickerSample.xcodeproj">
+            ReferencedContainer = "container:UdacityMemeMe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

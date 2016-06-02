@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9404F82D1CEE8E7E000D6020 /* ImageEdittingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */; };
-		94156FE11CFF7AC900EE45CA /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94156FE01CFF7AC900EE45CA /* HandleView.swift */; };
 		94FC1AAA1CC0C54300464DC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */; };
 		94FC1AAC1CC0C54300464DC7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AAB1CC0C54300464DC7 /* ViewController.swift */; };
 		94FC1AAF1CC0C54300464DC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FC1AAD1CC0C54300464DC7 /* Main.storyboard */; };
@@ -36,8 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdittingViewController.swift; sourceTree = "<group>"; };
-		94156FE01CFF7AC900EE45CA /* HandleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HandleView.swift; path = ../HandleView.swift; sourceTree = "<group>"; };
+		9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ImageEdittingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		94FC1AA61CC0C54300464DC7 /* ImagePickerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagePickerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94FC1AAB1CC0C54300464DC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -81,9 +79,9 @@
 		94FC1A9D1CC0C54300464DC7 = {
 			isa = PBXGroup;
 			children = (
-				94FC1AA81CC0C54300464DC7 /* ImagePickerSample */,
-				94FC1ABD1CC0C54400464DC7 /* ImagePickerSampleTests */,
-				94FC1AC81CC0C54400464DC7 /* ImagePickerSampleUITests */,
+				94FC1AA81CC0C54300464DC7 /* UdacityMemeMe */,
+				94FC1ABD1CC0C54400464DC7 /* UdacityMemeMeTests */,
+				94FC1AC81CC0C54400464DC7 /* UdacityMemeMeUITests */,
 				94FC1AA71CC0C54300464DC7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,37 +96,36 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		94FC1AA81CC0C54300464DC7 /* ImagePickerSample */ = {
+		94FC1AA81CC0C54300464DC7 /* UdacityMemeMe */ = {
 			isa = PBXGroup;
 			children = (
 				94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */,
 				94FC1AAB1CC0C54300464DC7 /* ViewController.swift */,
 				9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */,
-				94156FE01CFF7AC900EE45CA /* HandleView.swift */,
 				94FC1AAD1CC0C54300464DC7 /* Main.storyboard */,
 				94FC1AB01CC0C54300464DC7 /* Assets.xcassets */,
 				94FC1AB21CC0C54300464DC7 /* LaunchScreen.storyboard */,
 				94FC1AB51CC0C54300464DC7 /* Info.plist */,
 			);
-			path = ImagePickerSample;
+			path = UdacityMemeMe;
 			sourceTree = "<group>";
 		};
-		94FC1ABD1CC0C54400464DC7 /* ImagePickerSampleTests */ = {
+		94FC1ABD1CC0C54400464DC7 /* UdacityMemeMeTests */ = {
 			isa = PBXGroup;
 			children = (
 				94FC1ABE1CC0C54400464DC7 /* ImagePickerSampleTests.swift */,
 				94FC1AC01CC0C54400464DC7 /* Info.plist */,
 			);
-			path = ImagePickerSampleTests;
+			path = UdacityMemeMeTests;
 			sourceTree = "<group>";
 		};
-		94FC1AC81CC0C54400464DC7 /* ImagePickerSampleUITests */ = {
+		94FC1AC81CC0C54400464DC7 /* UdacityMemeMeUITests */ = {
 			isa = PBXGroup;
 			children = (
 				94FC1AC91CC0C54400464DC7 /* ImagePickerSampleUITests.swift */,
 				94FC1ACB1CC0C54400464DC7 /* Info.plist */,
 			);
-			path = ImagePickerSampleUITests;
+			path = UdacityMemeMeUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,7 +207,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 94FC1AA11CC0C54300464DC7 /* Build configuration list for PBXProject "ImagePickerSample" */;
+			buildConfigurationList = 94FC1AA11CC0C54300464DC7 /* Build configuration list for PBXProject "UdacityMemeMe" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -264,7 +261,6 @@
 			files = (
 				9404F82D1CEE8E7E000D6020 /* ImageEdittingViewController.swift in Sources */,
 				94FC1AAC1CC0C54300464DC7 /* ViewController.swift in Sources */,
-				94156FE11CFF7AC900EE45CA /* HandleView.swift in Sources */,
 				94FC1AAA1CC0C54300464DC7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,8 +402,7 @@
 		94FC1ACF1CC0C54400464DC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = ImagePickerSample/Info.plist;
+				INFOPLIST_FILE = UdacityMemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Amelia-Boli.ImagePickerSample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -417,8 +412,7 @@
 		94FC1AD01CC0C54400464DC7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = ImagePickerSample/Info.plist;
+				INFOPLIST_FILE = UdacityMemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Amelia-Boli.ImagePickerSample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -474,7 +468,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		94FC1AA11CC0C54300464DC7 /* Build configuration list for PBXProject "ImagePickerSample" */ = {
+		94FC1AA11CC0C54300464DC7 /* Build configuration list for PBXProject "UdacityMemeMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94FC1ACC1CC0C54400464DC7 /* Debug */,
