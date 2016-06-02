@@ -186,6 +186,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    @IBAction func dismissKeyboard(sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
     // Sharing and saving a meme
     struct Meme {
         let topText: String

@@ -51,12 +51,12 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vnZ-8W-oHt">
                                 <rect key="frame" x="20" y="84" width="560" height="17"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" returnKeyType="done"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8ZP-JR-zaq">
                                 <rect key="frame" x="20" y="499" width="560" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" returnKeyType="done"/>
                             </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wrs-bM-mid">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
@@ -93,6 +93,7 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="rTT-zZ-3JM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="ABf-TN-eCu"/>
                             <constraint firstItem="8ZP-JR-zaq" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Dcq-2c-Dig"/>
@@ -121,6 +122,9 @@
                                 <exclude reference="TpL-lO-1U6"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="o3o-x9-UoL" appends="YES" id="HYF-z8-GLc"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="bottomTextField" destination="8ZP-JR-zaq" id="1F1-8p-0AI"/>
@@ -136,6 +140,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="o3o-x9-UoL">
+                    <connections>
+                        <action selector="dismissKeyboard:" destination="BYZ-38-t0r" id="99G-o2-kyO"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="245" y="280"/>
         </scene>
