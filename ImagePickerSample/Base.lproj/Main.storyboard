@@ -39,6 +39,12 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YOUR IMAGE HERE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xec-2w-7eV">
+                                <rect key="frame" x="225" y="288" width="150" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="pickedImage" translatesAutoresizingMaskIntoConstraints="NO" id="FA4-Zz-0IQ">
                                 <rect key="frame" x="0.0" y="44" width="600" height="512"/>
                             </imageView>
@@ -90,6 +96,7 @@
                         <constraints>
                             <constraint firstItem="rTT-zZ-3JM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="ABf-TN-eCu"/>
                             <constraint firstItem="8ZP-JR-zaq" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Dcq-2c-Dig"/>
+                            <constraint firstItem="Xec-2w-7eV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="HUh-F9-fC3"/>
                             <constraint firstItem="rTT-zZ-3JM" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="HeW-F0-0Cg"/>
                             <constraint firstItem="FA4-Zz-0IQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Jv2-IV-aS3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rTT-zZ-3JM" secondAttribute="trailing" constant="-20" id="N0r-Gr-er5"/>
@@ -98,6 +105,7 @@
                             <constraint firstItem="Wrs-bM-mid" firstAttribute="top" secondItem="FA4-Zz-0IQ" secondAttribute="bottom" id="XCf-nn-Acj"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Wrs-bM-mid" secondAttribute="bottom" id="a2D-Gj-yEB"/>
                             <constraint firstItem="vnZ-8W-oHt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="fjn-cz-QJE"/>
+                            <constraint firstItem="Xec-2w-7eV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ftP-N9-RbR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vnZ-8W-oHt" secondAttribute="trailing" id="fyp-Ka-nqr"/>
                             <constraint firstItem="Wrs-bM-mid" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="lem-md-LZ0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FA4-Zz-0IQ" secondAttribute="trailing" constant="-20" id="lif-5e-ZeX"/>
@@ -118,7 +126,9 @@
                         <outlet property="bottomTextField" destination="8ZP-JR-zaq" id="1F1-8p-0AI"/>
                         <outlet property="bottomToolbar" destination="Wrs-bM-mid" id="vd5-Ey-J37"/>
                         <outlet property="cameraButton" destination="TQN-AO-V34" id="uX0-mY-kP7"/>
+                        <outlet property="clearButton" destination="EqC-Gk-Yrs" id="OM0-Gd-jpp"/>
                         <outlet property="cropButton" destination="isW-Zb-zGJ" id="Qd5-tI-YBq"/>
+                        <outlet property="imagePlaceholderText" destination="Xec-2w-7eV" id="PPj-EF-rlL"/>
                         <outlet property="pickedImage" destination="FA4-Zz-0IQ" id="lBN-a4-Nnl"/>
                         <outlet property="shareButton" destination="U19-PZ-dMH" id="c5d-Fp-LKJ"/>
                         <outlet property="topNavigationBar" destination="rTT-zZ-3JM" id="iEs-ce-rwd"/>

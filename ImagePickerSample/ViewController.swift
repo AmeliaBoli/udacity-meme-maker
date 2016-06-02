@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet var pickedImage: UIImageView!
+    @IBOutlet var imagePlaceholderText: UILabel!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
@@ -18,6 +19,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var topNavigationBar: UINavigationBar!
     @IBOutlet weak var bottomToolbar: UIToolbar!
     @IBOutlet weak var cropButton: UIBarButtonItem!
+    @IBOutlet weak var clearButton: UIBarButtonItem!
     
     var memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
@@ -40,6 +42,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIApplication.sharedApplication().statusBarHidden = true
         shareButton.enabled = false
         cropButton.enabled = false
+        clearButton.enabled = false
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -63,6 +66,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             textField.text = ""
         } else if textField == bottomTextField && textField.text == "BOTTOM" {
             textField.text = ""
+        }
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if topTextField.text != "TOP" || bottomTextField.text != "BOTTOM" {
+            clearButton.enabled = true
         }
     }
     
@@ -137,6 +146,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             pickedImage.image = image
             shareButton.enabled = true
             cropButton.enabled = true
+            clearButton.enabled = true
+            imagePlaceholderText.hidden = true
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -223,7 +234,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         pickedImage.image = nil
         shareButton.enabled = false
         cropButton.enabled = false
+        clearButton.enabled = false
         changeFont("Helvetica Neue")
+        imagePlaceholderText.hidden = false
     }
     
     // Transition Management
