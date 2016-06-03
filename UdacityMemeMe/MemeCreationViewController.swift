@@ -202,10 +202,9 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
 
+    // Simplified view moving logic after a suggestion from a Udacity reviewer
     func keyboardWillHide(notification: NSNotification) {
-        if bottomTextField.isFirstResponder() {
-            view.frame.origin.y += getKeyboardHeight(notification)
-        }
+        view.frame.origin.y = 0
     }
 
     func subscribeToKeyboardNotifications() {
