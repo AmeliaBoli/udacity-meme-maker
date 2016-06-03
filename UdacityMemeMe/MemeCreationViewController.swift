@@ -23,21 +23,14 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     // Friend suggested that the cancel button be called "clear" for clarity from a UX perspective
     @IBOutlet weak var clearButton: UIBarButtonItem!
 
-    var memeTextAttributes = [
-        NSStrokeColorAttributeName: UIColor.blackColor(),
-        NSForegroundColorAttributeName: UIColor.whiteColor(),
-        NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSStrokeWidthAttributeName: -3.0
-    ]
-
     override func viewDidLoad() {
         super.viewDidLoad()
         topTextField.text = "TOP"
         bottomTextField.text = "BOTTOM"
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.textAlignment = .Center
-        bottomTextField.textAlignment = .Center
+       
+        setFont(topTextField, title: "Helvetica Neue")
+        setFont(bottomTextField, title: "Helvetica Neue")
+       
         topTextField.delegate = self
         bottomTextField.delegate = self
 
@@ -109,19 +102,23 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
 
         let setAmericanTypewriter = UIAlertAction(title: "American Typewriter", style: .Default) {action in
             if let title = action.title {
-                self.changeFont(title)
+                self.setFont(self.topTextField, title: title)
+                self.setFont(self.bottomTextField, title: title)
             }}
         let setBradleyHand = UIAlertAction(title: "Bradley Hand", style: .Default) {action in
             if let title = action.title {
-                self.changeFont(title)
+                self.setFont(self.topTextField, title: title)
+                self.setFont(self.bottomTextField, title: title)
             }}
         let setCopperplate = UIAlertAction(title: "Copperplate", style: .Default) {action in
             if let title = action.title {
-                self.changeFont(title)
+                self.setFont(self.topTextField, title: title)
+                self.setFont(self.bottomTextField, title: title)
             }}
         let setHelvetica = UIAlertAction(title: "Helvetica Neue", style: .Default) {action in
             if let title = action.title {
-                self.changeFont(title)
+                self.setFont(self.topTextField, title: title)
+                self.setFont(self.bottomTextField, title: title)
             }}
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         fontView.addAction(setAmericanTypewriter)
@@ -133,8 +130,10 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         presentViewController(fontView, animated: true, completion: nil)
     }
     
-    func changeFont(title: String) {
-        let newFont: UIFont
+    // Abstracted the code below into this function after a suggestion from a Udacity reviewer
+    func setFont(textField: UITextField, title: String) {
+        
+        var newFont = UIFont()
 
         switch title {
         case "American Typewriter": newFont = UIFont(name: "AmericanTypewriter-CondensedBold", size: 40)!
@@ -143,12 +142,18 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         case "Helvetica Neue": newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         default: newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         }
+        
+        var memeTextAttributes = [
+            NSStrokeColorAttributeName: UIColor.blackColor(),
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSFontAttributeName: newFont,
+            NSStrokeWidthAttributeName: -3.0
+        ]
 
         memeTextAttributes[NSFontAttributeName] = newFont
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.textAlignment = .Center
-        bottomTextField.textAlignment = .Center
+        
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .Center
     }
 
     // Image Picker Configuration
@@ -190,9 +195,10 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         return keyboardSize.CGRectValue().height
     }
 
+    // Adjusted view moving logic to account for custom keyboards after a suggestion from a Udacity reviewer
     func keyboardWillShow(notification: NSNotification) {
         if bottomTextField.isFirstResponder() {
-            view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y = -getKeyboardHeight(notification)
         }
     }
 
@@ -267,7 +273,8 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         shareButton.enabled = false
         cropButton.enabled = false
         clearButton.enabled = false
-        changeFont("Helvetica Neue")
+        setFont(topTextField, title: "Helvetica Neue")
+        setFont(bottomTextField, title: "Helvetica Neue")
         imagePlaceholderText.hidden = false
     }
 
