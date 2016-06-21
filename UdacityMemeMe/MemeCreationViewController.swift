@@ -50,6 +50,27 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         subscribeToKeyboardNotifications()
     }
+    
+    // Added code to move the text fields based on the image's location after resizing based on the recomendation of the Udacity reviewer
+    override func viewDidLayoutSubviews() {
+        guard let imageFrame = pickedImage.resizedFrame else {
+            return
+        }
+        
+        if imageFrame.height < topTextField.frame.height + bottomTextField.frame.height {
+            topTextField.frame.origin = CGPoint(x: topTextField.frame.origin.x, y: imageFrame.origin.y - topTextField.frame.height)
+            bottomTextField.frame.origin = CGPoint(x: bottomTextField.frame.origin.x, y: imageFrame.maxY)
+        
+        } else {
+            if topTextField.frame.minY < imageFrame.minY {
+                topTextField.frame.origin = CGPoint(x: topTextField.frame.origin.x, y: imageFrame.origin.y)
+            }
+            
+            if bottomTextField.frame.maxY > imageFrame.maxY {
+                bottomTextField.frame.origin = CGPoint(x: bottomTextField.frame.origin.x, y: imageFrame.maxY - bottomTextField.frame.height)
+            }
+        }
+    }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
