@@ -244,15 +244,6 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         view.endEditing(true)
     }
 
-    // Sharing and saving a meme
-    struct Meme {
-        let topText: String
-        let bottomText: String
-        let image: UIImage
-        let memedImage: UIImage
-    }
-
-    // It was shared with me that you should try to never deploy an app with warnings. However, I'm assuming we are going to do something specific with this object in v2.
     func saveMeme(memedImage: UIImage) {
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image:
             pickedImage.image!, memedImage: memedImage)
@@ -263,12 +254,48 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     func generateMemedImage() -> UIImage {
         topNavigationBar.hidden = true
         bottomToolbar.hidden = true
-
+        
+        var imageFrame = view.frame
+        if let frame = pickedImage.resizedFrame {
+            imageFrame = frame
+        }
+        
+        //first we will make an UIImage from your view
+//        UIGraphicsBeginImageContext(self.view.bounds.size);
+//        [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+//        UIImage *sourceImage = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//        
+//        //now we will position the image, X/Y away from top left corner to get the portion we want
+//        UIGraphicsBeginImageContext(sshot.frame.size);
+//        [sourceImage drawAtPoint:CGPointMake(-50, -100)];
+//        UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//        UIImageWriteToSavedPhotosAlbum(croppedImage,nil, nil, nil);
+//        UIGraphicsBeginImageContext(CGSizeMake(200,200));' to make a 200X200 screenshot image
+        
+//        UIGraphicsBeginImageContext(self.view.bounds.size);
+//        CGContextRef c = UIGraphicsGetCurrentContext();
+//        CGContextTranslateCTM(c, 0, -40);    // <-- shift everything up by 40px when drawing.
+//        [self.view.layer renderInContext:c];
+//        UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+        
+        
+        // http://stackoverflow.com/questions/4194388/uigraphicsbeginimagecontext-with-parameters
         UIGraphicsBeginImageContext(view.frame.size)
-        view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextTranslateCTM(context, -imageFrame.origin.x, -imageFrame.origin.y)
+        CGContextScaleCTM(context, imageFrame.size.width, imageFrame.size.height)
+        view.layer.renderInContext(context!)
+//        let sourceImage = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        
+//        UIGraphicsBeginImageContext(imageFrame.size)
+//        sourceImage.drawAtPoint(imageFrame.origin)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         topNavigationBar.hidden = false
         bottomToolbar.hidden = false
 
@@ -283,7 +310,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         // I needed help working out how to use completionWithItemsHandler. This StackOverflow post helped: http://stackoverflow.com/questions/28169192/uiactivityviewcontroller-completion-handler-returns-success-when-tweet-has-faile
         activityView.completionWithItemsHandler = {(activityType, completed, returnedItems, activityError) in
             if completed {self.saveMeme(memedImage)}
-            self.dismissViewControllerAnimated(true, completion: nil)
+            //self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
 
@@ -313,5 +340,9 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             let sourceViewController = segue.sourceViewController as! ImageEdittingViewController
             pickedImage.image = sourceViewController.imageToEdit.image
         }
+    }
+    
+    @IBAction func dismissViewController(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
