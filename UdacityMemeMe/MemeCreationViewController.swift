@@ -22,6 +22,9 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var cropButton: UIBarButtonItem!
     // Friend suggested that the cancel button be called "clear" for clarity from a UX perspective
     @IBOutlet weak var clearButton: UIBarButtonItem!
+    
+    let textToFrameBuffer = CGFloat(20)
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,17 +60,17 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             return
         }
         
-        if imageFrame.height < topTextField.frame.height + bottomTextField.frame.height {
+        if imageFrame.height <= (topTextField.frame.height + bottomTextField.frame.height + 2 * textToFrameBuffer) {
             topTextField.frame.origin = CGPoint(x: topTextField.frame.origin.x, y: imageFrame.origin.y - topTextField.frame.height)
             bottomTextField.frame.origin = CGPoint(x: bottomTextField.frame.origin.x, y: imageFrame.maxY)
         
         } else {
             if topTextField.frame.minY < imageFrame.minY {
-                topTextField.frame.origin = CGPoint(x: topTextField.frame.origin.x, y: imageFrame.origin.y)
+                topTextField.frame.origin = CGPoint(x: topTextField.frame.origin.x, y: imageFrame.origin.y + textToFrameBuffer)
             }
             
             if bottomTextField.frame.maxY > imageFrame.maxY {
-                bottomTextField.frame.origin = CGPoint(x: bottomTextField.frame.origin.x, y: imageFrame.maxY - bottomTextField.frame.height)
+                bottomTextField.frame.origin = CGPoint(x: bottomTextField.frame.origin.x, y: imageFrame.maxY - bottomTextField.frame.height - textToFrameBuffer)
             }
         }
     }
@@ -260,42 +263,17 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             imageFrame = frame
         }
         
-        //first we will make an UIImage from your view
-//        UIGraphicsBeginImageContext(self.view.bounds.size);
-//        [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-//        UIImage *sourceImage = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//        
-//        //now we will position the image, X/Y away from top left corner to get the portion we want
-//        UIGraphicsBeginImageContext(sshot.frame.size);
-//        [sourceImage drawAtPoint:CGPointMake(-50, -100)];
-//        UIImage *croppedImage = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//        UIImageWriteToSavedPhotosAlbum(croppedImage,nil, nil, nil);
-//        UIGraphicsBeginImageContext(CGSizeMake(200,200));' to make a 200X200 screenshot image
+        if topTextField.frame.minY < imageFrame.minY {
+            imageFrame = CGRectOffset(imageFrame, 0, -topTextField.frame.height)
+            imageFrame.size.height += topTextField.frame.height + bottomTextField.frame.height
+        }
         
-//        UIGraphicsBeginImageContext(self.view.bounds.size);
-//        CGContextRef c = UIGraphicsGetCurrentContext();
-//        CGContextTranslateCTM(c, 0, -40);    // <-- shift everything up by 40px when drawing.
-//        [self.view.layer renderInContext:c];
-//        UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-        
-        
-        // http://stackoverflow.com/questions/4194388/uigraphicsbeginimagecontext-with-parameters
-        UIGraphicsBeginImageContext(view.frame.size)
-        let context = UIGraphicsGetCurrentContext()
-        CGContextTranslateCTM(context, -imageFrame.origin.x, -imageFrame.origin.y)
-        CGContextScaleCTM(context, imageFrame.size.width, imageFrame.size.height)
-        view.layer.renderInContext(context!)
-//        let sourceImage = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        
-//        UIGraphicsBeginImageContext(imageFrame.size)
-//        sourceImage.drawAtPoint(imageFrame.origin)
+        UIGraphicsBeginImageContext(imageFrame.size)
+        let frameToDraw = CGRect(origin: CGPoint(x: -imageFrame.origin.x, y: -imageFrame.origin.y), size: view.frame.size)
+        view.drawViewHierarchyInRect(frameToDraw, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+
         topNavigationBar.hidden = false
         bottomToolbar.hidden = false
 
