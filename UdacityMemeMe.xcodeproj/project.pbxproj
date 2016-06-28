@@ -90,6 +90,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94EDD50E1D21FF2F00E211D9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				94EDD50F1D21FF7900E211D9 /* MemeTableVC */,
+				94EDD5101D21FF8800E211D9 /* MemeCollectionVC */,
+				94FC1AAB1CC0C54300464DC7 /* MemeCreationViewController.swift */,
+				9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */,
+				94016CC61D1C838600B3BE86 /* MemeDetailViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		94EDD50F1D21FF7900E211D9 /* MemeTableVC */ = {
+			isa = PBXGroup;
+			children = (
+				94016CC41D1C836C00B3BE86 /* MemeTableViewController.swift */,
+				94ED9AEB1D21DD49007AD708 /* TableViewCell.swift */,
+			);
+			name = MemeTableVC;
+			sourceTree = "<group>";
+		};
+		94EDD5101D21FF8800E211D9 /* MemeCollectionVC */ = {
+			isa = PBXGroup;
+			children = (
+				94016CC21D1C835A00B3BE86 /* MemeCollectionViewController.swift */,
+				94016CC01D1C834A00B3BE86 /* MemeCollectionViewCell.swift */,
+			);
+			name = MemeCollectionVC;
+			sourceTree = "<group>";
+		};
 		94FC1A9D1CC0C54300464DC7 = {
 			isa = PBXGroup;
 			children = (
@@ -114,16 +144,10 @@
 			isa = PBXGroup;
 			children = (
 				94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */,
-				94FC1AAB1CC0C54300464DC7 /* MemeCreationViewController.swift */,
+				94EDD50E1D21FF2F00E211D9 /* ViewControllers */,
 				94016CBE1D1C7FC000B3BE86 /* MemeModel.swift */,
-				9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */,
 				94D7245C1D19F00A00DCE0D6 /* UIImageExtension.swift */,
 				94FC1AAD1CC0C54300464DC7 /* Main.storyboard */,
-				94ED9AEB1D21DD49007AD708 /* TableViewCell.swift */,
-				94016CC01D1C834A00B3BE86 /* MemeCollectionViewCell.swift */,
-				94016CC21D1C835A00B3BE86 /* MemeCollectionViewController.swift */,
-				94016CC41D1C836C00B3BE86 /* MemeTableViewController.swift */,
-				94016CC61D1C838600B3BE86 /* MemeDetailViewController.swift */,
 				94FC1AB01CC0C54300464DC7 /* Assets.xcassets */,
 				94FC1AB21CC0C54300464DC7 /* LaunchScreen.storyboard */,
 				94FC1AB51CC0C54300464DC7 /* Info.plist */,

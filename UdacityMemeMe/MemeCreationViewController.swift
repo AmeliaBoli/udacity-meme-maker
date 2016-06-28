@@ -288,6 +288,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         // I needed help working out how to use completionWithItemsHandler. This StackOverflow post helped: http://stackoverflow.com/questions/28169192/uiactivityviewcontroller-completion-handler-returns-success-when-tweet-has-faile
         activityView.completionWithItemsHandler = {(activityType, completed, returnedItems, activityError) in
             if completed {self.saveMeme(memedImage)}
+            // I did not feel that dismissing the shareController and going straight back to savedMemes view seemed natural. So I commented out this dismiss.
             //self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
