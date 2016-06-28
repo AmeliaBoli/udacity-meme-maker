@@ -53,15 +53,24 @@ class MemeCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MemeCollectionViewCell //VillainCollectionViewCell
-        cell.memeImage.image = memes[indexPath.item].memedImage //.name
-        //cell.pic.image = UIImage(named: villains[indexPath.item].imageName)
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MemeCollectionViewCell
+        cell.memeImage.image = memes[indexPath.item].memedImage
         return cell
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailViewController //VillainDetailViewController
+        
+        guard let storyboard = storyboard else {
+            return
+        }
+        
+        guard let navigationController = navigationController else {
+            return
+        }
+        
+        let detailController = storyboard.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailViewController
         detailController.imageToDisplay = memes[indexPath.item].memedImage
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController.pushViewController(detailController, animated: true)
     }
 }

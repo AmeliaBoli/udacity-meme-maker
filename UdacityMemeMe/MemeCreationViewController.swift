@@ -60,7 +60,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             return
         }
         
-        if imageFrame.height <= (topTextField.frame.height + bottomTextField.frame.height + 2 * textToFrameBuffer) {
+        if imageFrame.height <= (topTextField.frame.height + bottomTextField.frame.height + (2 * textToFrameBuffer)) {
             topTextField.frame.origin = CGPoint(x: topTextField.frame.origin.x, y: imageFrame.origin.y - topTextField.frame.height)
             bottomTextField.frame.origin = CGPoint(x: bottomTextField.frame.origin.x, y: imageFrame.maxY)
         
@@ -197,6 +197,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
+        
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             pickedImage.image = image
             shareButton.enabled = true
@@ -214,8 +215,12 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
 
     // Keyboard Confirguration
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        
+        guard let userInfo = notification.userInfo else {
+            return 0
+        }
+        
+        let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.CGRectValue().height
     }
 
@@ -271,7 +276,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         UIGraphicsBeginImageContext(imageFrame.size)
         let frameToDraw = CGRect(origin: CGPoint(x: -imageFrame.origin.x, y: -imageFrame.origin.y), size: view.frame.size)
         view.drawViewHierarchyInRect(frameToDraw, afterScreenUpdates: true)
-        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let memedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
         topNavigationBar.hidden = false
@@ -310,7 +315,10 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "editImage" {
             let controller = segue.destinationViewController as! ImageEdittingViewController
-            controller.image = pickedImage.image!
+            
+            if let image = pickedImage.image {
+                controller.image = image
+            }
         }
     }
 

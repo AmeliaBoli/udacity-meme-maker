@@ -50,7 +50,7 @@
 		9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ImageEdittingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		94D7245C1D19F00A00DCE0D6 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		94ED9AEB1D21DD49007AD708 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		94FC1AA61CC0C54300464DC7 /* ImagePickerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagePickerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94FC1AA61CC0C54300464DC7 /* UdacityMemeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UdacityMemeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94FC1AAB1CC0C54300464DC7 /* MemeCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeCreationViewController.swift; sourceTree = "<group>"; };
 		94FC1AAE1CC0C54300464DC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -133,7 +133,7 @@
 		94FC1AA71CC0C54300464DC7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				94FC1AA61CC0C54300464DC7 /* ImagePickerSample.app */,
+				94FC1AA61CC0C54300464DC7 /* UdacityMemeMe.app */,
 				94FC1ABA1CC0C54400464DC7 /* ImagePickerSampleTests.xctest */,
 				94FC1AC51CC0C54400464DC7 /* ImagePickerSampleUITests.xctest */,
 			);
@@ -190,7 +190,7 @@
 			);
 			name = ImagePickerSample;
 			productName = ImagePickerSample;
-			productReference = 94FC1AA61CC0C54300464DC7 /* ImagePickerSample.app */;
+			productReference = 94FC1AA61CC0C54300464DC7 /* UdacityMemeMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 		94FC1AB91CC0C54400464DC7 /* ImagePickerSampleTests */ = {
@@ -456,8 +456,8 @@
 			buildSettings = {
 				INFOPLIST_FILE = UdacityMemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Amelia-Boli.ImagePickerSample";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Amelia-Boli.UdacityMemeMe";
+				PRODUCT_NAME = UdacityMemeMe;
 			};
 			name = Debug;
 		};
@@ -466,8 +466,8 @@
 			buildSettings = {
 				INFOPLIST_FILE = UdacityMemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Amelia-Boli.ImagePickerSample";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Amelia-Boli.UdacityMemeMe";
+				PRODUCT_NAME = UdacityMemeMe;
 			};
 			name = Release;
 		};
