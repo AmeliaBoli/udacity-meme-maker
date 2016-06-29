@@ -17,6 +17,7 @@ class MemeTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //tableView.editing = true
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -64,6 +65,8 @@ class MemeTableViewController: UITableViewController {
         return cell
     }
 
+    // MARK: - Table view delegate methods
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
         guard let storyboard = storyboard else {
@@ -77,5 +80,14 @@ class MemeTableViewController: UITableViewController {
         let detailController = storyboard.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailViewController
         detailController.imageToDisplay = memes[indexPath.item].memedImage
         navigationController.pushViewController(detailController, animated: true)
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Destructive, title: "Delete") { (delete, indexPath) in
+            
+            (UIApplication.sharedApplication().delegate as! AppDelegate).memes.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Top)
+        }
+        return [deleteAction]
     }
 }
