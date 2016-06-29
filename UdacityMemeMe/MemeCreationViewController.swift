@@ -22,7 +22,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var cropButton: UIBarButtonItem!
     // Friend suggested that the cancel button be called "clear" for clarity from a UX perspective
     @IBOutlet weak var clearButton: UIBarButtonItem!
-    
+
     let textToFrameBuffer = CGFloat(20)
 
 
@@ -30,10 +30,10 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         super.viewDidLoad()
         topTextField.text = "TOP"
         bottomTextField.text = "BOTTOM"
-       
+
         setFont(topTextField, title: "Helvetica Neue")
         setFont(bottomTextField, title: "Helvetica Neue")
-       
+
         topTextField.delegate = self
         bottomTextField.delegate = self
 
@@ -53,22 +53,22 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         subscribeToKeyboardNotifications()
     }
-    
+
     // Added code to move the text fields based on the image's location after resizing based on the recomendation of the Udacity reviewer
     override func viewDidLayoutSubviews() {
         guard let imageFrame = pickedImage.resizedFrame else {
             return
         }
-        
+
         if imageFrame.height <= (topTextField.frame.height + bottomTextField.frame.height + (2 * textToFrameBuffer)) {
             topTextField.frame.origin = CGPoint(x: topTextField.frame.origin.x, y: imageFrame.origin.y - topTextField.frame.height)
             bottomTextField.frame.origin = CGPoint(x: bottomTextField.frame.origin.x, y: imageFrame.maxY)
-        
+
         } else {
             if topTextField.frame.minY < imageFrame.minY {
                 topTextField.frame.origin = CGPoint(x: topTextField.frame.origin.x, y: imageFrame.origin.y + textToFrameBuffer)
             }
-            
+
             if bottomTextField.frame.maxY > imageFrame.maxY {
                 bottomTextField.frame.origin = CGPoint(x: bottomTextField.frame.origin.x, y: imageFrame.maxY - bottomTextField.frame.height - textToFrameBuffer)
             }
@@ -94,7 +94,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             clearButton.enabled = true
         }
     }
-    
+
     // Added programmatic capitalization after suggestion from Udacity reviewer
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
 
@@ -111,7 +111,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             return true
         }
     }
-    
+
     // From UITextFieldDelegate Protocol- called when user presses keyboard's return button
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -150,13 +150,13 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         fontView.addAction(setCopperplate)
         fontView.addAction(setHelvetica)
         fontView.addAction(cancel)
-        
+
         presentViewController(fontView, animated: true, completion: nil)
     }
-    
+
     // Abstracted the code below into this function after a suggestion from a Udacity reviewer
     func setFont(textField: UITextField, title: String) {
-        
+
         var newFont = UIFont()
 
         switch title {
@@ -166,7 +166,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         case "Helvetica Neue": newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         default: newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         }
-        
+
         var memeTextAttributes = [
             NSStrokeColorAttributeName: UIColor.blackColor(),
             NSForegroundColorAttributeName: UIColor.whiteColor(),
@@ -175,7 +175,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         ]
 
         memeTextAttributes[NSFontAttributeName] = newFont
-        
+
         textField.defaultTextAttributes = memeTextAttributes
         textField.textAlignment = .Center
     }
@@ -197,7 +197,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
-        
+
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             pickedImage.image = image
             shareButton.enabled = true
@@ -215,11 +215,11 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
 
     // Keyboard Confirguration
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        
+
         guard let userInfo = notification.userInfo else {
             return 0
         }
-        
+
         let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.CGRectValue().height
     }
@@ -262,17 +262,17 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     func generateMemedImage() -> UIImage {
         topNavigationBar.hidden = true
         bottomToolbar.hidden = true
-        
+
         var imageFrame = view.frame
         if let frame = pickedImage.resizedFrame {
             imageFrame = frame
         }
-        
+
         if topTextField.frame.minY < imageFrame.minY {
             imageFrame = CGRectOffset(imageFrame, 0, -topTextField.frame.height)
             imageFrame.size.height += topTextField.frame.height + bottomTextField.frame.height
         }
-        
+
         UIGraphicsBeginImageContext(imageFrame.size)
         let frameToDraw = CGRect(origin: CGPoint(x: -imageFrame.origin.x, y: -imageFrame.origin.y), size: view.frame.size)
         view.drawViewHierarchyInRect(frameToDraw, afterScreenUpdates: true)
@@ -284,7 +284,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
 
         return memedImage
     }
-    
+
     @IBAction func shareMeme(sender: UIBarButtonItem) {
         let memedImage = generateMemedImage()
         let activityView = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
@@ -315,7 +315,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "editImage" {
             let controller = segue.destinationViewController as! ImageEdittingViewController
-            
+
             if let image = pickedImage.image {
                 controller.image = image
             }
@@ -328,7 +328,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             pickedImage.image = sourceViewController.imageToEdit.image
         }
     }
-    
+
     @IBAction func dismissViewController(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
     }

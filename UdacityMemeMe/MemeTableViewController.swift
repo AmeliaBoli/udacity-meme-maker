@@ -14,24 +14,24 @@ class MemeTableViewController: UITableViewController {
     var memes: [Meme] {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
     override func viewWillAppear(animated: Bool) {
         tableView.reloadData()
-        
+
         if memes.count == 0 {
             let backgroundView = UIView()
-            
+
             let noMemesLabel = UILabel()
             noMemesLabel.text = "Your Memes Here"
             noMemesLabel.sizeToFit()
             backgroundView.addSubview(noMemesLabel)
-            
+
             tableView.backgroundView = backgroundView
-            
+
             noMemesLabel.translatesAutoresizingMaskIntoConstraints = false
             noMemesLabel.centerXAnchor.constraintEqualToAnchor(noMemesLabel.superview?.centerXAnchor).active = true
             noMemesLabel.centerYAnchor.constraintEqualToAnchor(noMemesLabel.superview?.centerYAnchor).active = true
@@ -42,7 +42,7 @@ class MemeTableViewController: UITableViewController {
             }
         }
     }
-    
+
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -53,7 +53,7 @@ class MemeTableViewController: UITableViewController {
         return memes.count
     }
 
-    
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("memeCell", forIndexPath: indexPath) as! TableViewCell
 
@@ -65,15 +65,15 @@ class MemeTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+
         guard let storyboard = storyboard else {
             return
         }
-        
+
         guard let navigationController = navigationController else {
             return
         }
-        
+
         let detailController = storyboard.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailViewController
         detailController.imageToDisplay = memes[indexPath.item].memedImage
         navigationController.pushViewController(detailController, animated: true)
