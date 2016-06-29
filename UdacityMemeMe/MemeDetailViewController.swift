@@ -12,9 +12,13 @@ class MemeDetailViewController: UIViewController {
 
     @IBOutlet weak var memeImage: UIImageView!
     var imageToDisplay = UIImage()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         memeImage.image = imageToDisplay
+    }
+    
+    override func viewDidLayoutSubviews() {
+        print(memeImage.frame)
     }
 }
