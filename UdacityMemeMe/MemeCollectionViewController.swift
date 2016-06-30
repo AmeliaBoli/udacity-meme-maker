@@ -70,7 +70,8 @@ class MemeCollectionViewController: UICollectionViewController {
         }
 
         let detailController = storyboard.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailViewController
-        detailController.imageToDisplay = memes[indexPath.item].memedImage
+        detailController.meme = memes[indexPath.item]
+        detailController.index = indexPath.item
         navigationController.pushViewController(detailController, animated: true)
     }
 }

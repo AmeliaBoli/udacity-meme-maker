@@ -12,6 +12,7 @@ import UIKit
 struct Meme {
     let topText: String
     let bottomText: String
+    let fontTitle: String
     let image: UIImage
     let memedImage: UIImage
 }

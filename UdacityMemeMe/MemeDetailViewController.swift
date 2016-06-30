@@ -11,14 +11,35 @@ import UIKit
 class MemeDetailViewController: UIViewController {
 
     @IBOutlet weak var memeImage: UIImageView!
-    var imageToDisplay = UIImage()
+    
+    var meme: Meme?
+    var index = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        memeImage.image = imageToDisplay
+        
+        if let memedImage = meme?.memedImage {
+            memeImage.image = memedImage
+        }
     }
     
-    override func viewDidLayoutSubviews() {
-        print(memeImage.frame)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let creationController = segue.destinationViewController as! MemeCreationViewController
+        creationController.meme = meme
+        creationController.index = index
+        creationController.editingMeme = true
+    }
+    
+    func didFinishTask(sender: MemeCreationViewController) {
+        meme = sender.meme
+        memeImage.image = meme?.memedImage
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        if segue.identifier == "saveChanges" {
+            let sourceViewController = segue.sourceViewController as! MemeCreationViewController
+            meme = sourceViewController.meme
+            memeImage.image = meme?.memedImage
+        }
     }
 }

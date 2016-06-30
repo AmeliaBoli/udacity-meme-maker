@@ -78,7 +78,8 @@ class MemeTableViewController: UITableViewController {
         }
 
         let detailController = storyboard.instantiateViewControllerWithIdentifier("memeDetails") as! MemeDetailViewController
-        detailController.imageToDisplay = memes[indexPath.item].memedImage
+        detailController.meme = memes[indexPath.row]
+        detailController.index = indexPath.row
         navigationController.pushViewController(detailController, animated: true)
     }
     

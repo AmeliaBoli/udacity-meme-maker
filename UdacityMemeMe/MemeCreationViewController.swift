@@ -22,17 +22,44 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var cropButton: UIBarButtonItem!
     // Friend suggested that the cancel button be called "clear" for clarity from a UX perspective
     @IBOutlet weak var clearButton: UIBarButtonItem!
-
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet var saveChangesButton: UIBarButtonItem!
+    @IBOutlet weak var navigationBar: UINavigationBar!
+    
     let textToFrameBuffer = CGFloat(20)
-
-
+    var currentFont = "Helvetica Neue"
+    
+    var meme: Meme?
+    var index = 0
+    var editingMeme = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        topTextField.text = "TOP"
-        bottomTextField.text = "BOTTOM"
+        
+        if let meme = meme {
+            topTextField.text = meme.topText
+            bottomTextField.text = meme.bottomText
+            
+            pickedImage.image = meme.image
+            
+            currentFont = meme.fontTitle
+            
+            setFont(topTextField, title: currentFont)
+            setFont(bottomTextField, title: currentFont)
+            
+            doneButton.title = "Cancel"
+        
+        } else {
+            topTextField.text = "TOP"
+            bottomTextField.text = "BOTTOM"
+            
+            currentFont = "Helvetica Neue"
 
-        setFont(topTextField, title: "Helvetica Neue")
-        setFont(bottomTextField, title: "Helvetica Neue")
+            setFont(topTextField, title: "Helvetica Neue")
+            setFont(bottomTextField, title: "Helvetica Neue")
+            
+            doneButton.title = "Done"
+        }
 
         topTextField.delegate = self
         bottomTextField.delegate = self
@@ -42,14 +69,29 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         shareButton.enabled = false
         cropButton.enabled = false
         clearButton.enabled = false
-    }
-
-    override func prefersStatusBarHidden() -> Bool {
-        return true
+        
+        if var toolbarButtons = navigationBar.topItem?.leftBarButtonItems {
+            if editingMeme {
+                if !toolbarButtons.contains(saveChangesButton) {
+                    toolbarButtons.append(saveChangesButton)
+                    navigationBar.topItem?.leftBarButtonItems = toolbarButtons
+                }
+                
+            } else {
+                if let index = toolbarButtons.indexOf(saveChangesButton) {
+                    toolbarButtons.removeAtIndex(index)
+                    navigationBar.topItem?.leftBarButtonItems = toolbarButtons
+                }
+            }
+        }
+        else {
+            print("Error")
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         subscribeToKeyboardNotifications()
     }
@@ -74,10 +116,15 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             }
         }
     }
-
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
+        editingMeme = false
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 
     // Text Field Configuration
@@ -166,6 +213,8 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         case "Helvetica Neue": newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         default: newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         }
+        
+        currentFont = title
 
         var memeTextAttributes = [
             NSStrokeColorAttributeName: UIColor.blackColor(),
@@ -253,10 +302,17 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     }
 
     func saveMeme(memedImage: UIImage) {
-        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image:
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, fontTitle: currentFont, image:
             pickedImage.image!, memedImage: memedImage)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.memes.append(meme)
+        
+        if !editingMeme {
+            appDelegate.memes.append(meme)
+        } else {
+            appDelegate.memes[index] = meme
+        }
+        
+        self.meme = meme
     }
 
     func generateMemedImage() -> UIImage {
@@ -283,6 +339,11 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         bottomToolbar.hidden = false
 
         return memedImage
+    }
+    
+    func saveChanges() {
+        let memedImage = generateMemedImage()
+        saveMeme(memedImage)
     }
 
     @IBAction func shareMeme(sender: UIBarButtonItem) {
@@ -319,6 +380,8 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             if let image = pickedImage.image {
                 controller.image = image
             }
+        } else if segue.identifier == "saveChanges" {
+            saveChanges()
         }
     }
 
