@@ -66,7 +66,7 @@ class MemeTableViewController: UITableViewController {
     }
 
     // MARK: - Table view delegate methods
-    
+
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
         guard let storyboard = storyboard else {
@@ -82,10 +82,10 @@ class MemeTableViewController: UITableViewController {
         detailController.index = indexPath.row
         navigationController.pushViewController(detailController, animated: true)
     }
-    
+
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Destructive, title: "Delete") { (delete, indexPath) in
-            
+
             (UIApplication.sharedApplication().delegate as! AppDelegate).memes.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Top)
         }

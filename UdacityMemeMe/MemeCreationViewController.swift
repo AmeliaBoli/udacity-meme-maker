@@ -25,73 +25,73 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet var saveChangesButton: UIBarButtonItem!
     @IBOutlet weak var navigationBar: UINavigationBar!
-    
+
     let textToFrameBuffer = CGFloat(20)
     var currentFont = "Helvetica Neue"
-    
+
     var meme: Meme?
     var index = 0
     var editingMeme = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let meme = meme {
-            topTextField.text = meme.topText
-            bottomTextField.text = meme.bottomText
-            
-            pickedImage.image = meme.image
-            
-            currentFont = meme.fontTitle
-            
+
+        if editingMeme {
+            if let meme = meme {
+                topTextField.text = meme.topText
+                bottomTextField.text = meme.bottomText
+
+                pickedImage.image = meme.image
+
+                currentFont = meme.fontTitle
+            }
+
             setFont(topTextField, title: currentFont)
             setFont(bottomTextField, title: currentFont)
-            
+
             doneButton.title = "Cancel"
-        
-        } else {
-            topTextField.text = "TOP"
-            bottomTextField.text = "BOTTOM"
-            
-            currentFont = "Helvetica Neue"
+            shareButton.enabled = true
+            cropButton.enabled = true
+            clearButton.enabled = true
 
-            setFont(topTextField, title: "Helvetica Neue")
-            setFont(bottomTextField, title: "Helvetica Neue")
-            
-            doneButton.title = "Done"
-        }
-
-        topTextField.delegate = self
-        bottomTextField.delegate = self
-
-        UIApplication.sharedApplication().statusBarHidden = true
-
-        shareButton.enabled = false
-        cropButton.enabled = false
-        clearButton.enabled = false
-        
-        if var toolbarButtons = navigationBar.topItem?.leftBarButtonItems {
-            if editingMeme {
+            // I started with the code in an answer on this StackOverflow post to show/hide the saveChanges button. http://stackoverflow.com/questions/10021748/how-do-i-show-hide-a-uibarbuttonitem
+            if var toolbarButtons = navigationBar.topItem?.leftBarButtonItems {
                 if !toolbarButtons.contains(saveChangesButton) {
                     toolbarButtons.append(saveChangesButton)
                     navigationBar.topItem?.leftBarButtonItems = toolbarButtons
                 }
-                
-            } else {
+            }
+        } else {
+            topTextField.text = "TOP"
+            bottomTextField.text = "BOTTOM"
+
+            currentFont = "Helvetica Neue"
+
+            setFont(topTextField, title: "Helvetica Neue")
+            setFont(bottomTextField, title: "Helvetica Neue")
+
+            doneButton.title = "Done"
+            shareButton.enabled = false
+            cropButton.enabled = false
+            clearButton.enabled = false
+
+            if var toolbarButtons = navigationBar.topItem?.leftBarButtonItems {
                 if let index = toolbarButtons.indexOf(saveChangesButton) {
                     toolbarButtons.removeAtIndex(index)
                     navigationBar.topItem?.leftBarButtonItems = toolbarButtons
                 }
             }
         }
-        else {
-            print("Error")
-        }
+
+        topTextField.delegate = self
+        bottomTextField.delegate = self
+
+        UIApplication.sharedApplication().statusBarHidden = true
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         subscribeToKeyboardNotifications()
     }
@@ -116,13 +116,13 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             }
         }
     }
-    
+
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotifications()
         editingMeme = false
     }
-    
+
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -213,7 +213,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         case "Helvetica Neue": newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         default: newFont = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!
         }
-        
+
         currentFont = title
 
         var memeTextAttributes = [
@@ -305,13 +305,13 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, fontTitle: currentFont, image:
             pickedImage.image!, memedImage: memedImage)
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
+
         if !editingMeme {
             appDelegate.memes.append(meme)
         } else {
             appDelegate.memes[index] = meme
         }
-        
+
         self.meme = meme
     }
 
@@ -340,7 +340,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
 
         return memedImage
     }
-    
+
     func saveChanges() {
         let memedImage = generateMemedImage()
         saveMeme(memedImage)
