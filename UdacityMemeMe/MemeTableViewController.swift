@@ -17,7 +17,6 @@ class MemeTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.editing = true
     }
 
     override func viewWillAppear(animated: Bool) {

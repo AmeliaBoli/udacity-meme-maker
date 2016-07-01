@@ -127,6 +127,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         return true
     }
 
+    // Func abstracted upon Udacity reviewer's request
     func makeAlertAction(title: String) -> UIAlertAction {
         let alertAction = UIAlertAction(title: title, style: .Default) {action in
             if let title = action.title {
@@ -135,7 +136,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
             }}
         return alertAction
     }
-    
+
     @IBAction func pickFont(sender: UIBarButtonItem!) {
         let fontView = UIAlertController(title: "Fonts", message: nil, preferredStyle: .ActionSheet)
 
@@ -146,9 +147,9 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         let setBradleyHand = makeAlertAction("Bradley Hand")
         let setCopperplate = makeAlertAction("Copperplate")
         let setHelvetica = makeAlertAction("Helvetica Neue")
-        
+
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        
+
         fontView.addAction(setAmericanTypewriter)
         fontView.addAction(setBradleyHand)
         fontView.addAction(setCopperplate)
@@ -186,6 +187,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         textField.textAlignment = .Center
     }
 
+    // Func abstracted upon Udacity reviewer's request
     func presentImagePicker(sourceType: UIImagePickerControllerSourceType) {
         let pickerController = UIImagePickerController()
         pickerController.delegate = self
@@ -193,7 +195,7 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         pickerController.view.layoutIfNeeded()
         presentViewController(pickerController, animated: true, completion: nil)
     }
-    
+
     // Image Picker Configuration
     @IBAction func pickImage(sender: UIBarButtonItem) {
        presentImagePicker(.PhotoLibrary)
