@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MemeCreationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeCreationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var pickedImage: UIImageView!
     // Friend suggested that I add some text to indicate that a picked photo would appear in the middle of the view
@@ -127,44 +127,6 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         return true
     }
 
-    // Text Field Configuration
-    func textFieldDidBeginEditing(textField: UITextField) {
-        if textField == topTextField && textField.text == "TOP" {
-            textField.text = ""
-        } else if textField == bottomTextField && textField.text == "BOTTOM" {
-            textField.text = ""
-        }
-    }
-
-    func textFieldDidEndEditing(textField: UITextField) {
-        if topTextField.text != "TOP" || bottomTextField.text != "BOTTOM" {
-            clearButton.enabled = true
-        }
-    }
-
-    // Added programmatic capitalization after suggestion from Udacity reviewer
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-
-        let capitalizedString = string.uppercaseString
-
-        if string != capitalizedString {
-            if let currentText = textField.text {
-                textField.text = currentText + capitalizedString
-            } else {
-                textField.text = string.capitalizedString
-            }
-            return false
-        } else {
-            return true
-        }
-    }
-
-    // From UITextFieldDelegate Protocol- called when user presses keyboard's return button
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-
     func makeAlertAction(title: String) -> UIAlertAction {
         let alertAction = UIAlertAction(title: title, style: .Default) {action in
             if let title = action.title {
@@ -224,20 +186,21 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         textField.textAlignment = .Center
     }
 
-    // Image Picker Configuration
-    @IBAction func pickImage(sender: UIBarButtonItem) {
+    func presentImagePicker(sourceType: UIImagePickerControllerSourceType) {
         let pickerController = UIImagePickerController()
         pickerController.delegate = self
-        pickerController.sourceType = .PhotoLibrary
+        pickerController.sourceType = sourceType
+        pickerController.view.layoutIfNeeded()
         presentViewController(pickerController, animated: true, completion: nil)
+    }
+    
+    // Image Picker Configuration
+    @IBAction func pickImage(sender: UIBarButtonItem) {
+       presentImagePicker(.PhotoLibrary)
     }
 
     @IBAction func takeImageWithCamera(sender: UIBarButtonItem) {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = .Camera
-        pickerController.view.layoutIfNeeded()
-        presentViewController(pickerController, animated: true, completion: nil)
+      presentImagePicker(.Camera)
     }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
