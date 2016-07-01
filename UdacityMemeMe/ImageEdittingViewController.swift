@@ -68,6 +68,19 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         return true
     }
 
+    // Used Natasha The Robot's post about configuring constants with shorthand names  as my pattern below. https://www.natashatherobot.com/swift-configuring-a-constant-using-shorthand-argument-names/
+    // Abstracted this code based on a request from a Udacity reviewer.
+    func addCornerPiece(x x: CGFloat, y: CGFloat, size: CGSize) {
+        let backgroundColor = UIColor.whiteColor().CGColor
+
+        let cornerPiece: CALayer = {
+            $0.backgroundColor = backgroundColor
+            $0.frame = CGRect(origin: CGPoint(x: x, y: y), size: size)
+            return $0
+        } (CALayer())
+        imageCropperBorder.layer.addSublayer(cornerPiece)
+    }
+
     // I used an answer on the following StackOverflow post as a jumping point for how I added the handles to the cropping view. http://stackoverflow.com/questions/17355280/how-to-add-a-border-just-on-the-top-side-of-a-uiview
     func addCornerHandles(bounds: CGRect) {
 
@@ -90,64 +103,14 @@ class ImageEdittingViewController: UIViewController, UIGestureRecognizerDelegate
         let bottomHorizontalY = CGFloat(bounds.maxY)
         let bottomVerticalY = CGFloat(bounds.maxY - verticalSize.height + frameOffset)
 
-        let backgroundColor = UIColor.whiteColor().CGColor
-
-        // Used Natasha The Robot's post about configuring constants with shorthand names  as my pattern below. https://www.natashatherobot.com/swift-configuring-a-constant-using-shorthand-argument-names/
-        let topLeft: CALayer = {
-            $0.backgroundColor = backgroundColor
-            $0.frame = CGRect(origin: CGPoint(x: leftX, y: topY), size: horizontalSize)
-            return $0
-        } (CALayer())
-        imageCropperBorder.layer.addSublayer(topLeft)
-
-        let topRight: CALayer = {
-            $0.backgroundColor = backgroundColor
-            $0.frame = CGRect(origin: CGPoint(x: rightHorizontalX, y: topY), size: horizontalSize)
-            return $0
-        } (CALayer())
-        imageCropperBorder.layer.addSublayer(topRight)
-
-        let bottomLeft: CALayer = {
-            $0.backgroundColor = backgroundColor
-            $0.frame = CGRect(origin: CGPoint(x: leftX, y: bottomHorizontalY), size: horizontalSize)
-            return $0
-        } (CALayer())
-        imageCropperBorder.layer.addSublayer(bottomLeft)
-
-        let bottomRight: CALayer = {
-            $0.backgroundColor = backgroundColor
-            $0.frame = CGRect(origin: CGPoint(x: rightHorizontalX, y: bottomHorizontalY), size: horizontalSize)
-            return $0
-        } (CALayer())
-        imageCropperBorder.layer.addSublayer(bottomRight)
-
-        let leftTop: CALayer = {
-            $0.backgroundColor = backgroundColor
-            $0.frame = CGRect(origin: CGPoint(x: leftX, y: topY), size: verticalSize)
-            return $0
-        } (CALayer())
-        imageCropperBorder.layer.addSublayer(leftTop)
-
-        let leftBottom: CALayer = {
-            $0.backgroundColor = backgroundColor
-            $0.frame = CGRect(origin: CGPoint(x: leftX, y: bottomVerticalY), size: verticalSize)
-            return $0
-        } (CALayer())
-        imageCropperBorder.layer.addSublayer(leftBottom)
-
-        let rightTop: CALayer = {
-            $0.backgroundColor = backgroundColor
-            $0.frame = CGRect(origin: CGPoint(x: rightVerticalX, y: topY), size: verticalSize)
-            return $0
-        } (CALayer())
-        imageCropperBorder.layer.addSublayer(rightTop)
-
-        let rightBottom: CALayer = {
-            $0.backgroundColor = backgroundColor
-            $0.frame = CGRect(origin: CGPoint(x: rightVerticalX, y: bottomVerticalY), size: verticalSize)
-            return $0
-        } (CALayer())
-        imageCropperBorder.layer.addSublayer(rightBottom)
+        addCornerPiece(x: leftX, y: topY, size: horizontalSize)
+        addCornerPiece(x: rightHorizontalX, y: topY, size: horizontalSize)
+        addCornerPiece(x: leftX, y: bottomHorizontalY, size: horizontalSize)
+        addCornerPiece(x: rightHorizontalX, y: bottomHorizontalY, size: horizontalSize)
+        addCornerPiece(x: leftX, y: topY, size: verticalSize)
+        addCornerPiece(x: leftX, y: bottomVerticalY, size: verticalSize)
+        addCornerPiece(x: rightVerticalX, y: topY, size: verticalSize)
+        addCornerPiece(x: rightVerticalX, y: bottomVerticalY, size: verticalSize)
     }
 
     @IBAction func resetImage(sender: UIBarButtonItem) {

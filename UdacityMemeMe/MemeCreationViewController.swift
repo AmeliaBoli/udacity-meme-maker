@@ -165,33 +165,28 @@ class MemeCreationViewController: UIViewController, UIImagePickerControllerDeleg
         return true
     }
 
+    func makeAlertAction(title: String) -> UIAlertAction {
+        let alertAction = UIAlertAction(title: title, style: .Default) {action in
+            if let title = action.title {
+                self.setFont(self.topTextField, title: title)
+                self.setFont(self.bottomTextField, title: title)
+            }}
+        return alertAction
+    }
+    
     @IBAction func pickFont(sender: UIBarButtonItem!) {
         let fontView = UIAlertController(title: "Fonts", message: nil, preferredStyle: .ActionSheet)
 
         //While sharing my progress with someone, they recommended that I add a message in order to make the alert clearer.
         fontView.message = "Select a New Font"
 
-        let setAmericanTypewriter = UIAlertAction(title: "American Typewriter", style: .Default) {action in
-            if let title = action.title {
-                self.setFont(self.topTextField, title: title)
-                self.setFont(self.bottomTextField, title: title)
-            }}
-        let setBradleyHand = UIAlertAction(title: "Bradley Hand", style: .Default) {action in
-            if let title = action.title {
-                self.setFont(self.topTextField, title: title)
-                self.setFont(self.bottomTextField, title: title)
-            }}
-        let setCopperplate = UIAlertAction(title: "Copperplate", style: .Default) {action in
-            if let title = action.title {
-                self.setFont(self.topTextField, title: title)
-                self.setFont(self.bottomTextField, title: title)
-            }}
-        let setHelvetica = UIAlertAction(title: "Helvetica Neue", style: .Default) {action in
-            if let title = action.title {
-                self.setFont(self.topTextField, title: title)
-                self.setFont(self.bottomTextField, title: title)
-            }}
+        let setAmericanTypewriter = makeAlertAction("American Typewriter")
+        let setBradleyHand = makeAlertAction("Bradley Hand")
+        let setCopperplate = makeAlertAction("Copperplate")
+        let setHelvetica = makeAlertAction("Helvetica Neue")
+        
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
         fontView.addAction(setAmericanTypewriter)
         fontView.addAction(setBradleyHand)
         fontView.addAction(setCopperplate)
