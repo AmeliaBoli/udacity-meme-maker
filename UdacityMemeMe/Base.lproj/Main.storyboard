@@ -469,7 +469,7 @@
         <scene sceneID="7wt-jW-Ov1">
             <objects>
                 <navigationController title="Sent Memes" automaticallyAdjustsScrollViewInsets="NO" id="kYw-Tq-IIG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="Collection" id="gyI-g5-rtI"/>
+                    <tabBarItem key="tabBarItem" title="" image="Collection" selectedImage="Collection" id="gyI-g5-rtI"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xH9-PJ-8e7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -488,7 +488,7 @@
         <scene sceneID="rZr-YS-y8K">
             <objects>
                 <navigationController title="Sent Memes" automaticallyAdjustsScrollViewInsets="NO" id="4zq-oe-tXo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="Table" id="e1L-rR-D08"/>
+                    <tabBarItem key="tabBarItem" title="" image="Table" selectedImage="Table" id="e1L-rR-D08"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Z5e-KT-WQd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -509,6 +509,6 @@
         <image name="Table" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9nh-dg-9XE"/>
+        <segue reference="GpM-qs-kZu"/>
     </inferredMetricsTieBreakers>
 </document>

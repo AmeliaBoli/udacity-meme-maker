@@ -14,12 +14,12 @@
 		94016CC71D1C838600B3BE86 /* MemeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94016CC61D1C838600B3BE86 /* MemeDetailViewController.swift */; };
 		9404F82D1CEE8E7E000D6020 /* ImageEdittingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */; };
 		941284951D26EF76003268C5 /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941284941D26EF76003268C5 /* TextFieldDelegate.swift */; };
+		944419ED1D5933FF000F1453 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944419EC1D5933FF000F1453 /* Assets.xcassets */; };
 		94D7245D1D19F00A00DCE0D6 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D7245C1D19F00A00DCE0D6 /* UIImageExtension.swift */; };
 		94ED9AEC1D21DD49007AD708 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94ED9AEB1D21DD49007AD708 /* TableViewCell.swift */; };
 		94FC1AAA1CC0C54300464DC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */; };
 		94FC1AAC1CC0C54300464DC7 /* MemeCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AAB1CC0C54300464DC7 /* MemeCreationViewController.swift */; };
 		94FC1AAF1CC0C54300464DC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FC1AAD1CC0C54300464DC7 /* Main.storyboard */; };
-		94FC1AB11CC0C54300464DC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94FC1AB01CC0C54300464DC7 /* Assets.xcassets */; };
 		94FC1AB41CC0C54300464DC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94FC1AB21CC0C54300464DC7 /* LaunchScreen.storyboard */; };
 		94FC1ABF1CC0C54400464DC7 /* ImagePickerSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1ABE1CC0C54400464DC7 /* ImagePickerSampleTests.swift */; };
 		94FC1ACA1CC0C54400464DC7 /* ImagePickerSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC1AC91CC0C54400464DC7 /* ImagePickerSampleUITests.swift */; };
@@ -50,13 +50,13 @@
 		94016CC61D1C838600B3BE86 /* MemeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeDetailViewController.swift; sourceTree = "<group>"; };
 		9404F82C1CEE8E7E000D6020 /* ImageEdittingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ImageEdittingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		941284941D26EF76003268C5 /* TextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
+		944419EC1D5933FF000F1453 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		94D7245C1D19F00A00DCE0D6 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		94ED9AEB1D21DD49007AD708 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		94FC1AA61CC0C54300464DC7 /* UdacityMemeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UdacityMemeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FC1AA91CC0C54300464DC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		94FC1AAB1CC0C54300464DC7 /* MemeCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeCreationViewController.swift; sourceTree = "<group>"; };
 		94FC1AAE1CC0C54300464DC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		94FC1AB01CC0C54300464DC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94FC1AB31CC0C54300464DC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94FC1AB51CC0C54300464DC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94FC1ABA1CC0C54400464DC7 /* ImagePickerSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,7 +151,7 @@
 				94016CBE1D1C7FC000B3BE86 /* MemeModel.swift */,
 				94D7245C1D19F00A00DCE0D6 /* UIImageExtension.swift */,
 				94FC1AAD1CC0C54300464DC7 /* Main.storyboard */,
-				94FC1AB01CC0C54300464DC7 /* Assets.xcassets */,
+				944419EC1D5933FF000F1453 /* Assets.xcassets */,
 				94FC1AB21CC0C54300464DC7 /* LaunchScreen.storyboard */,
 				94FC1AB51CC0C54300464DC7 /* Info.plist */,
 			);
@@ -281,7 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94FC1AB41CC0C54300464DC7 /* LaunchScreen.storyboard in Resources */,
-				94FC1AB11CC0C54300464DC7 /* Assets.xcassets in Resources */,
+				944419ED1D5933FF000F1453 /* Assets.xcassets in Resources */,
 				94FC1AAF1CC0C54300464DC7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,6 +458,8 @@
 		94FC1ACF1CC0C54400464DC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = UdacityMemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Amelia-Boli.UdacityMemeMe";
@@ -468,6 +470,8 @@
 		94FC1AD01CC0C54400464DC7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = UdacityMemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Amelia-Boli.UdacityMemeMe";
