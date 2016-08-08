@@ -6,9 +6,9 @@ MemeMe was written in Swift 2.2
 
 ## Install
 
-In order to run this app you will need Xcode 7.3. If using a personal iOS device, it will need to have iOS 9.2 or later installed.
+In order to run this app you will need Xcode 7.3. If using a personal iOS device, it will need to have iOS 9.3 or later installed.
 
-1. Open `Pitch Perfect.xcodeproj` in Xcode
+1. Open `UdacityMemeMe.xcodeproj` in Xcode
 2. Build and run the project on the simulator or on a personal iOS device.
 
 ## Known Issues
